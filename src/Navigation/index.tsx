@@ -10,17 +10,12 @@ import { RecipeAddScreen } from '../../src/Screens/RecipeAdd';
 import { LoginScreen } from '../../src/Screens/Login';
 import { RegisterScreen } from '../../src/Screens/Register';
 import { ForgotPasswordScreen } from '../../src/Screens/ForgotPassword';
-import { useEffect } from 'react';
 
 const Stack = createNativeStackNavigator();
 
 const RootNav = () => {
 
     const loggedIn = useSelector(selectLoggedIn);
-
-    useEffect(() => {
-        alert("LoggedIn: " + loggedIn)
-    }, loggedIn)
 
     return (
         <NavigationContainer>
@@ -29,6 +24,7 @@ const RootNav = () => {
                     headerShown: false
                 }}
                 initialRouteName='Login'>
+
 
                 {!loggedIn ? (<>
                     <Stack.Screen name="Login" component={LoginScreen} />

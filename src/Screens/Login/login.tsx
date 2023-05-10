@@ -1,11 +1,13 @@
 import { ScrollView, StyleSheet, Text, View, ImageBackground, TouchableOpacity } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { selectAccessToken, selectRefreshToken, setAccessToken, setRefreshToken } from "../../Redux/Store/authStore";
 
 import { TextInput, Button, ParaSm } from "../../Components";
 import { TURQOISE, WHITE } from "../../Constants/Colors";
 import { signin } from "../../Redux/Store/authStore";
+import { store } from "../../Redux/Store";
 import Toast from "react-native-toast-message";
 
 const Login = () => {
@@ -13,8 +15,8 @@ const Login = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('mfal33');
+    const [password, setPassword] = useState('Matthewfallon33!');
 
     const [usernameErrors, setUsernameErrors] = useState([]);
     const [passwordErrors, setPasswordErrors] = useState([]);
@@ -36,7 +38,7 @@ const Login = () => {
     const onSubmitHandler = async () => {
         await dispatch(signin({ username, password }))
             .unwrap()
-            .then(data => {
+            .then(async (data) => {
 
                 if (data.errors) {
                     setUsernameErrors(data.errors.username);
@@ -55,7 +57,6 @@ const Login = () => {
 
             })
             .catch(err => {
-                alert("the err: " + JSON.stringify(err))
                 Toast.show({
                     type: 'error',
                     text1: 'Failed to login...'

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { BASE_URL } from '../../../config';
+import API from '../../API';
 
 interface RecipeState {
   recipe: object,
@@ -18,7 +19,7 @@ export const getRecipes = createAsyncThunk(
   'recipes/getRecipes',
   async (search) => {
 
-    let url = `${BASE_URL}/recipes`;
+    let url = `/recipes`;
     let body = {};
 
     if (search?.length) {
@@ -26,7 +27,7 @@ export const getRecipes = createAsyncThunk(
       url += `?name=${search}`
     }
 
-    const response = await axios.get(url, { validateStatus: () => true });
+    const response = await API.get(url, { validateStatus: () => true });
 
     return response;
 

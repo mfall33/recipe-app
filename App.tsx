@@ -5,8 +5,11 @@ import { Provider } from 'react-redux';
 import RootNav from './src/Navigation';
 import Toast from 'react-native-toast-message';
 import { TURQOISE } from './src/Constants/Colors';
+import setupInterceptors from "./src/Services/setupInterceptors";
+
 
 function App() {
+
 
   return (
     <Provider store={store}>

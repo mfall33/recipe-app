@@ -1,25 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { persistReducer } from 'redux-persist';
-import thunk from 'redux-thunk';
 
 import recipeStore from './recipeStore';
 import authStore from './authStore';
 
-const persistConfig = {
-  key: 'auth',
-  storage: AsyncStorage,
-}
-
-const peristedAuthStore = persistReducer(persistConfig, authStore)
-
-
 export const store = configureStore({
   reducer: {
     recipes: recipeStore,
-    auth: peristedAuthStore
+    auth: authStore
   },
-  middleware: [thunk]
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

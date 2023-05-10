@@ -32,40 +32,21 @@ const Recipes = () => {
     const recipesError = useSelector(selectRecipesError)
     const recipes = useSelector(selectAllRecipes)
 
-    const redirectIfNoAuth = (result) => {
-
-        alert(JSON.stringify(result))
-        if (result?.payload?.status === 403) {
-            alert(403)
-            // dispatch(setLoggedIn(false))
-
-            // navigation.dispatch(
-            //     CommonActions.reset({
-            //         index: 1,
-            //         routes: [
-            //             { name: 'Login' },
-            //         ],
-            //     })
-            // );
-
-        }
-    }
-
     useEffect(() => {
         if (recipesStatus === 'idle') {
-            dispatch(getRecipes(search)).then(redirectIfNoAuth);
+            dispatch(getRecipes(search));
         }
     }, [recipesStatus, dispatch])
 
     useFocusEffect(
         useCallback(() => {
-            dispatch(getRecipes(search)).then(redirectIfNoAuth);
+            dispatch(getRecipes(search));
         }, [])
     );
 
     const refreshData = async () => {
         setRefreshing(true);
-        dispatch(getRecipes(search)).then(redirectIfNoAuth);
+        dispatch(getRecipes(search));
         setRefreshing(false);
     }
 
@@ -86,7 +67,7 @@ const Recipes = () => {
 
         try {
             await dispatch(removeRecipe(item)).unwrap()
-            dispatch(getRecipes(search)).then(redirectIfNoAuth);
+            dispatch(getRecipes(search));
             Toast.show({
                 type: 'success',
                 text1: 'Recipe Removed!'
@@ -103,7 +84,7 @@ const Recipes = () => {
             <Header
                 search={search}
                 onChange={(e) => setSearch(e)}
-                onSubmit={() => { dispatch(getRecipes(search)).then(redirectIfNoAuth); }}
+                onSubmit={() => { dispatch(getRecipes(search)); }}
                 onCancel={() => { setSearch('') }} />
 
             <ScrollView
