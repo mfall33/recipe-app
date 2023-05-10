@@ -36,7 +36,6 @@ const useRecipes = () => {
                 })
 
         } catch (err) {
-
             Toast.show({
                 type: 'error',
                 text1: 'Failed to delete image!'

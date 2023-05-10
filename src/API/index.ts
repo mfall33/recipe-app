@@ -1,8 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from '../../config';
-import { useSelector } from 'react-redux';
 import { store } from '../Redux/Store';
-import { Alert } from 'react-native/types';
 import { setAccessToken, setRefreshToken } from '../Redux/Store/authStore';
 
 const instance = axios.create({
@@ -48,9 +46,6 @@ instance.interceptors.response.use(
                 store.dispatch(setAccessToken(response?.data?.accessToken))
 
                 const newInstance = axios.create(originalConfig);
-
-                alert("OriginalConfig: " + JSON.stringify(originalConfig))
-
 
                 console.log("access: " + response.data.accessToken);
                 console.log("refresh: " + response.data.refreshToken);

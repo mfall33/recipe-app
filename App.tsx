@@ -5,10 +5,13 @@ import { Provider } from 'react-redux';
 import RootNav from './src/Navigation';
 import Toast from 'react-native-toast-message';
 import { TURQOISE } from './src/Constants/Colors';
-import setupInterceptors from "./src/Services/setupInterceptors";
+import { LogBox } from 'react-native';
 
 
 function App() {
+
+  // comment this out when testing..
+  LogBox.ignoreAllLogs()
 
 
   return (

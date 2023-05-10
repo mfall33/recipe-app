@@ -42,7 +42,8 @@ export const updateRecipe = createAsyncThunk(
 
     try {
 
-      const response = await axios.put(`${BASE_URL}/recipes/${recipe._id}`, params);
+      const response = await API.put(`/recipes/${recipe._id}`, params);
+
       return response.data;
 
     } catch (error) {
@@ -58,12 +59,8 @@ export const addRecipe = createAsyncThunk(
   async recipe => {
 
     try {
+      const response = await API.post('/recipes', recipe);
 
-      const response = await axios({
-        method: 'post',
-        url: `${BASE_URL}/recipes`,
-        data: recipe
-      })
       return response.data;
 
     } catch (error) {
@@ -81,13 +78,11 @@ export const removeRecipeImage = createAsyncThunk(
 
     try {
 
-      const response = await axios({
-        method: 'delete',
-        url: `${BASE_URL}/recipes/${recipe._id}/image`,
+      const response = await API.delete(`/recipes/${recipe._id}/image`, {
         data: {
           image: image
         }
-      })
+      });
 
       return response.data;
 
@@ -105,11 +100,16 @@ export const addRecipeImages = createAsyncThunk(
 
     try {
 
+      // untidy... need to revisit this to use the API helper instance...
       const response = await axios({
         method: 'post',
         url: `${BASE_URL}/recipes/${recipe._id}/image`,
-        data: data
+        data: data,
+        headers: {
+          'x-access-token': getState().auth.accessToken,
+        }
       })
+
       return response.data;
 
     } catch (error) {
@@ -123,9 +123,9 @@ export const removeRecipe = createAsyncThunk(
   'recipes/removeRecipe',
   // The payload creator receives the partial `{title, content, user}` object
   async recipe => {
-    // We send the initial data to the fake API server
-    const response = await axios.delete(`${BASE_URL}/recipes/${recipe._id}`)
-    // The response includes the complete post object, including unique ID
+
+    const response = await API.delete(`/recipes/${recipe._id}`);
+
     return response.data
   }
 )

@@ -146,7 +146,7 @@ const Recipe = () => {
 
             <ScrollView contentContainerStyle={styles.cont} showsVerticalScrollIndicator={false}>
 
-                {recipe.images.length > 0 &&
+                {recipe.images?.length > 0 &&
                     <View>
 
                         <ImageContainer
