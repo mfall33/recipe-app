@@ -7,7 +7,7 @@ import Toast from "react-native-toast-message";
 import { styles } from "./styles";
 import { useRecipes } from "../../Hooks";
 import { TURQOISE } from "../../Constants/Colors";
-import { List, PlusBtn, Header } from "../../Components";
+import { List, PlusBtn, Header, Button } from "../../Components";
 import {
     getRecipes,
     removeRecipe,
@@ -15,8 +15,7 @@ import {
     selectRecipeStatus,
     selectRecipesError
 } from "../../Redux/Store/recipeStore";
-
-import { setLoggedIn } from "../../Redux/Store/authStore";
+import { logout } from "../../Redux/Store/authStore";
 
 const Recipes = () => {
 
@@ -86,6 +85,10 @@ const Recipes = () => {
                 onChange={(e) => setSearch(e)}
                 onSubmit={() => { dispatch(getRecipes(search)); }}
                 onCancel={() => { setSearch('') }} />
+
+            <Button
+                text="Log-Out"
+                onPress={() => dispatch(logout(false))} />
 
             <ScrollView
                 showsVerticalScrollIndicator={false}

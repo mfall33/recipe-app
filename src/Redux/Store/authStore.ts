@@ -36,7 +36,32 @@ export const signin = createAsyncThunk(
   async user => {
 
     try {
+      /* 
+      we don't really need the API axios instance for
+      this but the response interceptor will set the
+      access token behind the scenes
+      */
       const response = await API.post(`/auth/signin`, user)
+
+      return response.data;
+
+    } catch (error) {
+      return error?.response?.data;
+    }
+  }
+)
+
+export const refreshTokens = createAsyncThunk(
+  'auth/refreshTokens',
+  async (token, { getState }) => {
+
+    const { refreshToken } = getState().auth;
+
+    try {
+      // using normal axios instance as we don't need the access token for this request
+      const response = await axios.post(
+        `${BASE_URL}/auth/refreshtoken`,
+        { refreshToken: refreshToken })
 
       return response.data;
 
@@ -50,14 +75,12 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    setAccessToken: (state, action) => {
-      state.accessToken = action.payload;
-    },
-    setRefreshToken: (state, action) => {
-      state.refreshToken = action.payload;
-    },
-    setLoggedIn: (state, action) => {
-      state.loggedIn = action.payload;
+    logout: (state, action) => {
+
+      state.loggedIn = false;
+      state.accessToken = '';
+      state.refreshToken = '';
+      
     },
   },
   extraReducers(builder) {
@@ -69,6 +92,13 @@ export const authSlice = createSlice({
           state.accessToken = accessToken;
           state.refreshToken = refreshToken;
         }
+      })
+      .addCase(refreshTokens.fulfilled, (state, action) => {
+
+        const { accessToken, refreshToken } = action.payload;
+        if (accessToken) state.accessToken = accessToken;
+        if (refreshToken) state.refreshToken = refreshToken;
+
       })
   }
 })
@@ -85,8 +115,6 @@ export const selectRefreshToken = (state: AuthState) => {
   return state.auth.refreshToken
 };
 
-
-
-export const { setLoggedIn, setAccessToken, setRefreshToken } = authSlice.actions
+export const { logout } = authSlice.actions
 
 export default authSlice.reducer

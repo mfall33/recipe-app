@@ -88,6 +88,7 @@ const RecipeAdd = () => {
 
             })
             .catch(function (error) {
+                console.log("Error: " + JSON.stringify(error))  
                 Toast.show({
                     type: 'error',
                     text1: 'Something went wrong.. please try again.'

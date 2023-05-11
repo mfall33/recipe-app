@@ -2,12 +2,10 @@ import { ScrollView, StyleSheet, Text, View, ImageBackground, TouchableOpacity }
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectAccessToken, selectRefreshToken, setAccessToken, setRefreshToken } from "../../Redux/Store/authStore";
 
 import { TextInput, Button, ParaSm } from "../../Components";
 import { TURQOISE, WHITE } from "../../Constants/Colors";
-import { signin } from "../../Redux/Store/authStore";
-import { store } from "../../Redux/Store";
+import { selectAccessToken, selectLoggedIn, signin } from "../../Redux/Store/authStore";
 import Toast from "react-native-toast-message";
 
 const Login = () => {
@@ -23,6 +21,9 @@ const Login = () => {
 
     const usernameRef = useRef(null);
     const passwordRef = useRef(null);
+
+    const loggedIn = useSelector(selectLoggedIn);
+    const accessToken = useSelector(selectAccessToken);
 
     useFocusEffect(
         useCallback(() => {

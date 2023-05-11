@@ -55,23 +55,22 @@ export const updateRecipe = createAsyncThunk(
 
 export const addRecipe = createAsyncThunk(
   'recipes/addRecipe',
-  // The payload creator receives the partial `{title, content, user}` object
   async recipe => {
 
     try {
+      
       const response = await API.post('/recipes', recipe);
 
       return response.data;
 
     } catch (error) {
-      return error?.response?.data;
+      throw error?.response?.data;
     }
   }
 )
 
 export const removeRecipeImage = createAsyncThunk(
   'recipes/removeRecipeImage',
-  // The payload creator receives the partial `{title, content, user}` object
   async (image, { getState }) => {
 
     const recipe = getState().recipes.recipe;
@@ -101,14 +100,10 @@ export const addRecipeImages = createAsyncThunk(
     try {
 
       // untidy... need to revisit this to use the API helper instance...
-      const response = await axios({
-        method: 'post',
-        url: `${BASE_URL}/recipes/${recipe._id}/image`,
-        data: data,
-        headers: {
-          'x-access-token': getState().auth.accessToken,
-        }
-      })
+      // need to try setting headers for form-data content-type
+      // might need to better structure the body into data.files etc
+
+      const response = await API.post(`/recipes/${recipe._id}/image`, data);
 
       return response.data;
 
