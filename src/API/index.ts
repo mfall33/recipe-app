@@ -5,6 +5,7 @@ import { refreshTokens } from '../Redux/Store/authStore';
 
 const instance = axios.create({
     baseURL: BASE_URL,
+    validateStatus: () => true
 });
 
 instance.interceptors.request.use(

@@ -1,4 +1,4 @@
-import { useFocusEffect, useNavigation, CommonActions } from "@react-navigation/native";
+import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { ScrollView, RefreshControl, Text, View, Alert } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -9,9 +9,9 @@ import { useRecipes } from "../../Hooks";
 import { TURQOISE } from "../../Constants/Colors";
 import { List, PlusBtn, Header, Button } from "../../Components";
 import {
-    getRecipes,
+    getMyRecipes,
     removeRecipe,
-    selectAllRecipes,
+    selectMyRecipes,
     selectRecipeStatus,
     selectRecipesError
 } from "../../Redux/Store/recipeStore";
@@ -29,23 +29,23 @@ const Recipes = () => {
 
     const recipesStatus = useSelector(selectRecipeStatus)
     const recipesError = useSelector(selectRecipesError)
-    const recipes = useSelector(selectAllRecipes)
+    const recipes = useSelector(selectMyRecipes)
 
     useEffect(() => {
         if (recipesStatus === 'idle') {
-            dispatch(getRecipes(search));
+            dispatch(getMyRecipes(search));
         }
     }, [recipesStatus, dispatch])
 
     useFocusEffect(
         useCallback(() => {
-            dispatch(getRecipes(search));
+            dispatch(getMyRecipes(search));
         }, [])
     );
 
     const refreshData = async () => {
         setRefreshing(true);
-        dispatch(getRecipes(search));
+        dispatch(getMyRecipes(search));
         setRefreshing(false);
     }
 
@@ -66,7 +66,7 @@ const Recipes = () => {
 
         try {
             await dispatch(removeRecipe(item)).unwrap()
-            dispatch(getRecipes(search));
+            dispatch(getMyRecipes(search));
             Toast.show({
                 type: 'success',
                 text1: 'Recipe Removed!'
@@ -81,14 +81,11 @@ const Recipes = () => {
         <View style={styles.cont}>
 
             <Header
+                subTitle="My Recipes"
                 search={search}
                 onChange={(e) => setSearch(e)}
-                onSubmit={() => { dispatch(getRecipes(search)); }}
+                onSubmit={() => { dispatch(getMyRecipes(search)); }}
                 onCancel={() => { setSearch('') }} />
-
-            <Button
-                text="Log-Out"
-                onPress={() => dispatch(logout(false))} />
 
             <ScrollView
                 showsVerticalScrollIndicator={false}

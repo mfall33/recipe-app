@@ -15,15 +15,24 @@ import Keychain from 'react-native-keychain';
 
 import recipeStore from './recipeStore';
 import authStore from './authStore';
+import userStore from './userStore';
 
-const persistConfig = {
+const authPersistConfig = {
   key: 'auth',
   version: 1,
   storage: AsyncStorage
 }
 
+const userPersistConfig = {
+  key: 'user',
+  version: 1,
+  storage: AsyncStorage
+}
+
+
 const rootReducer = combineReducers({
-  auth: persistReducer(persistConfig, authStore),
+  auth: persistReducer(authPersistConfig, authStore),
+  user: persistReducer(userPersistConfig, userStore),
   recipes: recipeStore
 });
 

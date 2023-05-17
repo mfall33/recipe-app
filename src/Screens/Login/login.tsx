@@ -1,29 +1,27 @@
 import { ScrollView, StyleSheet, Text, View, ImageBackground, TouchableOpacity } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback, useRef, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { TextInput, Button, ParaSm } from "../../Components";
 import { TURQOISE, WHITE } from "../../Constants/Colors";
-import { selectAccessToken, selectLoggedIn, signin } from "../../Redux/Store/authStore";
+import { signin } from "../../Redux/Store/authStore";
 import Toast from "react-native-toast-message";
+import { setUser } from "../../Redux/Store/userStore";
 
 const Login = () => {
 
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
-    const [username, setUsername] = useState('mfal33');
-    const [password, setPassword] = useState('Matthewfallon33!');
+    const [username, setUsername] = useState<String>('');
+    const [password, setPassword] = useState<String>('');
 
     const [usernameErrors, setUsernameErrors] = useState([]);
     const [passwordErrors, setPasswordErrors] = useState([]);
 
     const usernameRef = useRef(null);
     const passwordRef = useRef(null);
-
-    const loggedIn = useSelector(selectLoggedIn);
-    const accessToken = useSelector(selectAccessToken);
 
     useFocusEffect(
         useCallback(() => {
@@ -39,7 +37,7 @@ const Login = () => {
     const onSubmitHandler = async () => {
         await dispatch(signin({ username, password }))
             .unwrap()
-            .then(async (data) => {
+            .then(async (data: any) => {
 
                 if (data.errors) {
                     setUsernameErrors(data.errors.username);
@@ -47,9 +45,15 @@ const Login = () => {
                     return;
                 }
 
-                // clearFields();
+                if (data.message) {
+                    throw new Error(data.message)
+                }
 
-                navigation.navigate('Recipes');
+                clearFields();
+
+                dispatch(setUser(data))
+
+                navigation.navigate('AllRecipes');
 
                 return Toast.show({
                     type: 'success',
@@ -57,12 +61,24 @@ const Login = () => {
                 });
 
             })
-            .catch(err => {
+            .catch((err: any) => {
+
                 Toast.show({
                     type: 'error',
                     text1: 'Failed to login...'
                 })
+
             })
+    }
+
+    const handleUserNameInput = (text: String) => {
+        setUsername(text);
+        setUsernameErrors([]);
+    }
+
+    const handlePasswordInput = (text: String) => {
+        setPassword(text);
+        setPasswordErrors([]);
     }
 
     return (
@@ -85,7 +101,7 @@ const Login = () => {
                         labelTextStyle={{ color: WHITE }}
                         label="Username/Email"
                         onSubmitEditing={() => passwordRef.current?.focus()}
-                        onChangeText={setUsername}
+                        onChangeText={handleUserNameInput}
                     />
 
                     <TextInput
@@ -96,7 +112,7 @@ const Login = () => {
                         value={password}
                         labelTextStyle={{ color: WHITE }}
                         label="Password"
-                        onChangeText={setPassword}
+                        onChangeText={handlePasswordInput}
                     />
 
                     <Button

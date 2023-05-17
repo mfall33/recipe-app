@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { setRecipe, setRecipes as setStoreRecipes, removeRecipeImage, removeRecipe, getRecipes, updateRecipe, addRecipeImages } from "../Redux/Store/recipeStore";
+import { setRecipe, setRecipes as setStoreRecipes, removeRecipeImage, removeRecipe, getAllRecipes, updateRecipe, addRecipeImages } from "../Redux/Store/recipeStore";
 import { useDispatch } from "react-redux";
 import { useNavigation } from "@react-navigation/native";
 import Toast from 'react-native-toast-message';
@@ -76,14 +76,14 @@ const useRecipes = () => {
         try {
             await dispatch(removeRecipe(recipe)).unwrap()
                 .then(data => {
-                    navigation.navigate('Recipes');
+                    navigation.navigate('AllRecipes');
                     Toast.show({
                         type: 'success',
                         text1: 'Recipe Removed!'
                     })
                 })
                 .catch(err => console.log("Something went wrong: " + JSON.stringify(err)))
-            dispatch(getRecipes());
+            dispatch(getAllRecipes());
         } catch (err) {
             Toast.show({
                 type: 'error',

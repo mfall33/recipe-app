@@ -6,20 +6,41 @@ import API from '../../API';
 interface RecipeState {
   recipe: object,
   recipes: [],
+  myRecipes: [],
   status: string
 }
 
 const initialState: RecipeState = {
   recipe: {},
   recipes: [],
+  myRecipes: [],
   status: 'idle',
 }
 
-export const getRecipes = createAsyncThunk(
-  'recipes/getRecipes',
+export const getAllRecipes = createAsyncThunk(
+  'recipes/getAllRecipes',
   async (search) => {
 
     let url = `/recipes`;
+    let body = {};
+
+    if (search?.length) {
+      body.name = search;
+      url += `?name=${search}`
+    }
+
+    const response = await API.get(url, { validateStatus: () => true });
+
+    return response;
+
+  }
+)
+
+export const getMyRecipes = createAsyncThunk(
+  'recipes/getMyRecipes',
+  async (search) => {
+
+    let url = `/recipes/mine`;
     let body = {};
 
     if (search?.length) {
@@ -58,7 +79,7 @@ export const addRecipe = createAsyncThunk(
   async recipe => {
 
     try {
-      
+
       const response = await API.post('/recipes', recipe);
 
       return response.data;
@@ -138,14 +159,18 @@ export const recipeSlice = createSlice({
   },
   extraReducers(builder) {
     builder
-      .addCase(getRecipes.pending, (state, action) => {
+      .addCase(getAllRecipes.pending, (state, action) => {
         state.status = 'loading'
       })
-      .addCase(getRecipes.fulfilled, (state, action) => {
+      .addCase(getAllRecipes.fulfilled, (state, action) => {
         state.status = 'succeeded'
         state.recipes = action.payload.data
       })
-      .addCase(getRecipes.rejected, (state, action) => {
+      .addCase(getMyRecipes.fulfilled, (state, action) => {
+        state.status = 'succeeded'
+        state.myRecipes = action.payload.data
+      })
+      .addCase(getAllRecipes.rejected, (state, action) => {
         state.status = 'failed'
         state.error = action.error.message
       })
@@ -176,6 +201,7 @@ export const recipeSlice = createSlice({
 })
 
 export const selectAllRecipes = (state: RecipeState) => state.recipes.recipes;
+export const selectMyRecipes = (state: RecipeState) => state.recipes.myRecipes;
 export const selectRecipeStatus = (state: RecipeState) => state.recipes.status;
 export const selectRecipesError = (state: RecipeState) => state.recipes.error;
 

@@ -142,7 +142,7 @@ const Recipe = () => {
                 </View>
             </Modal>
 
-            <Header backBtnPress={() => navigation.navigate('Recipes')} subTitle={recipe.name} />
+            <Header backBtnPress={() => navigation.goBack()} subTitle={recipe.name} />
 
             <ScrollView contentContainerStyle={styles.cont} showsVerticalScrollIndicator={false}>
 
