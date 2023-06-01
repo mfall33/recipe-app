@@ -4,15 +4,15 @@ import { StyleSheet, Text } from 'react-native';
 type listProps = {
     items: any,
     err: string,
-    itemPress: (item: any) => void,
-    itemDeletePress: (item: any) => void,
+    itemPress?: (item: any) => void,
+    itemDeletePress?: (item: any) => void,
     itemDisplayKey: string
 }
 
 const List = ({ items, err, itemPress, itemDeletePress, itemDisplayKey }: listProps) => {
 
     return (items.length ?
-        items.map((item) =>
+        items.map((item: any) =>
             <Item
                 key={item._id}
                 item={item}

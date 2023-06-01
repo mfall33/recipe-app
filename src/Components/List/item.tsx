@@ -3,8 +3,8 @@ import { YELLOW, WHITE, TURQOISE } from '../../Constants/Colors';
 
 interface ItemProps {
     item: any,
-    callback: void,
-    closeCallback: void,
+    callback?: (item: any) => void,
+    closeCallback?: (item: any) => void,
     itemDisplayKey: string
 }
 
@@ -14,7 +14,9 @@ const Item = ({ item, callback, closeCallback, itemDisplayKey }: ItemProps) => {
         <TouchableOpacity style={styles.list} onPress={(e) => callback && callback(item)}>
             <Text style={styles.text}>{item[itemDisplayKey]}</Text>
             {closeCallback &&
-                <TouchableOpacity style={styles.delete} onPress={(e) => closeCallback && closeCallback(item)}>
+                <TouchableOpacity
+                    style={styles.delete}
+                    onPress={(e) => closeCallback && closeCallback(item)}>
                     <Text style={styles.deleteInner}>X</Text>
                 </TouchableOpacity>
             }

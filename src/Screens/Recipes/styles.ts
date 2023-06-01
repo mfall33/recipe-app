@@ -7,6 +7,7 @@ export const styles = StyleSheet.create({
     },
     scrollCont: {
         minHeight: '100%',
+        paddingBottom: 140,
         backgroundColor: WHITE
     },
     loader: {

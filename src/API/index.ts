@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { BASE_URL } from '../../config';
 import { store } from '../Redux/Store';
-import { refreshTokens } from '../Redux/Store/authStore';
+import { logout, refreshTokens } from '../Redux/Store/authStore';
 
 const instance = axios.create({
     baseURL: BASE_URL,
@@ -37,7 +37,9 @@ instance.interceptors.response.use(
             try {
 
                 await store.dispatch(refreshTokens()).then(data => {
-                    originalConfig.headers['x-access-token'] = data.payload.accessToken;
+                    data.payload.accessToken ?
+                        originalConfig.headers['x-access-token'] = data.payload.accessToken :
+                        store.dispatch(logout(false))
                 })
 
                 // use the new instance to resend the original request
@@ -57,7 +59,9 @@ instance.interceptors.response.use(
         if (err.response.status === 401) {
 
             await store.dispatch(refreshTokens()).then(data => {
-                originalConfig.headers['x-access-token'] = data.payload.accessToken;
+                data.payload.accessToken ?
+                    originalConfig.headers['x-access-token'] = data.payload.accessToken :
+                    store.dispatch(logout(false))
             })
 
             return axios.request(originalConfig)

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { TURQOISE, WHITE } from "../../Constants/Colors";
+import { TURQOISE, TURQOISE_OP, WHITE } from "../../Constants/Colors";
 
 type PlusButtonProps = {
     onPress?: () => void
@@ -19,14 +19,14 @@ const styles = StyleSheet.create({
     cont: {
         position: 'absolute',
         zIndex: 999,
-        top: '80%',
+        top: '75%',
         right: 15,
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 30,
-        backgroundColor: TURQOISE,
+        backgroundColor: TURQOISE_OP,
         borderColor: WHITE,
         borderWidth: 2,
         width: 60,

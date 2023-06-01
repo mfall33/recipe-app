@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { ScrollView, RefreshControl, Text, View, Alert } from "react-native";
+import { ScrollView, RefreshControl, Text, View, Alert, FlatList } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Toast from "react-native-toast-message";
@@ -7,7 +7,7 @@ import Toast from "react-native-toast-message";
 import { styles } from "./styles";
 import { useRecipes } from "../../Hooks";
 import { TURQOISE } from "../../Constants/Colors";
-import { List, PlusBtn, Header, Button } from "../../Components";
+import { PlusBtn, Header, Card } from "../../Components";
 import {
     getMyRecipes,
     removeRecipe,
@@ -15,7 +15,6 @@ import {
     selectRecipeStatus,
     selectRecipesError
 } from "../../Redux/Store/recipeStore";
-import { logout } from "../../Redux/Store/authStore";
 
 const Recipes = () => {
 
@@ -99,13 +98,22 @@ const Recipes = () => {
                 }
             >
 
-                <List
-                    items={recipes}
-                    itemDisplayKey="name"
-                    itemPress={(item) => { viewRecipe(item) }}
-                    itemDeletePress={(item) => deleteRecipe(item)}
-                    err={'No recipes found...'}
-                />
+                {recipes.length > 0 ?
+                    <FlatList
+                        data={recipes}
+                        renderItem={({ item }) =>
+                            <Card
+                                onPress={() => viewRecipe(item)}
+                                title={item.name}
+                                subTitle={item.duration}
+                                bottomText={item.user.username}
+                                image={item.images[0]}
+                            />
+                        }
+                    />
+                    :
+                    <Text style={{ padding: 10 }}>No Recipes found...</Text>
+                }
 
                 {recipesStatus === 'failed' &&
                     <View style={styles.errCont}>

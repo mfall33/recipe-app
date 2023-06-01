@@ -8,7 +8,7 @@ import Modal from "react-native-modal";
 import { TextInput, Button, Header, ImageContainer } from "../../Components";
 import { useRecipes } from "../../Hooks";
 import { styles } from "./styles";
-import { RED, WHITE } from "../../Constants/Colors";
+import { RED, TURQOISE, WHITE } from "../../Constants/Colors";
 import { IMAGE_BASE_URL } from "../../../config";
 
 const Recipe = () => {
@@ -144,11 +144,14 @@ const Recipe = () => {
 
             <Header backBtnPress={() => navigation.goBack()} subTitle={recipe.name} />
 
+            <View style={[{ borderBottomColor: TURQOISE, borderBottomWidth: 2 }, styles.pad]}>
+                <Text style={{ fontSize: 18 }}><Text style={{ fontWeight: '600', color: TURQOISE }}>Made by: </Text><Text style={{ fontStyle: 'italic', color: TURQOISE }}>{recipe.user.username}</Text></Text>
+            </View>
+
             <ScrollView contentContainerStyle={styles.cont} showsVerticalScrollIndicator={false}>
 
                 {recipe.images?.length > 0 &&
                     <View>
-
                         <ImageContainer
                             style={styles.topImgCont}
                             imgStyle={styles.topImg}
@@ -167,7 +170,6 @@ const Recipe = () => {
                                     }])
                             }
                         />
-
                     </View>}
 
                 <View style={styles.pad}>
@@ -228,7 +230,7 @@ const Recipe = () => {
 
                 </View>
 
-            </ScrollView>
+            </ScrollView >
 
             <View style={styles.btnCont}>
 
@@ -257,7 +259,7 @@ const Recipe = () => {
                 />
             </View>
 
-        </View>
+        </View >
     );
 }
 

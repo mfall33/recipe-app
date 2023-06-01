@@ -1,6 +1,6 @@
 import { ScrollView, StyleSheet, Text, View, ImageBackground, TouchableOpacity } from "react-native";
 import { TextInput, Button, ParaSm } from "../../Components";
-import { TURQOISE, WHITE } from "../../Constants/Colors";
+import { BLACK_OP_HEAVY, TURQOISE, WHITE } from "../../Constants/Colors";
 import { useRef, useState } from "react";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 
@@ -74,7 +74,7 @@ const styles = StyleSheet.create({
         borderColor: TURQOISE,
         borderTopWidth: 2,
         borderBottomWidth: 2,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)'
+        backgroundColor: BLACK_OP_HEAVY
     },
     title: {
         fontSize: 30,

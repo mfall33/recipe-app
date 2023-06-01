@@ -5,7 +5,7 @@ import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
 
 import { TextInput, Button, ParaSm } from "../../Components";
-import { TURQOISE, WHITE } from "../../Constants/Colors";
+import { BLACK_OP_HEAVY, TURQOISE, WHITE } from "../../Constants/Colors";
 
 import { signup } from "../../Redux/Store/authStore";
 
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
         borderColor: TURQOISE,
         borderTopWidth: 2,
         borderBottomWidth: 2,
-        backgroundColor: 'rgba(0, 0, 0, 0.7)'
+        backgroundColor: BLACK_OP_HEAVY
     },
     title: {
         fontSize: 30,

@@ -1,21 +1,19 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { ScrollView, RefreshControl, Text, View, Alert } from "react-native";
+import { ScrollView, RefreshControl, Text, View, FlatList, Image, ImageBackground, TouchableOpacity } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import Toast from "react-native-toast-message";
 
 import { styles } from "./styles";
 import { useRecipes } from "../../Hooks";
-import { TURQOISE } from "../../Constants/Colors";
-import { List, PlusBtn, Header, Button } from "../../Components";
+import { TURQOISE, WHITE } from "../../Constants/Colors";
+import { Card, PlusBtn, Header } from "../../Components";
 import {
     getAllRecipes,
-    removeRecipe,
     selectAllRecipes,
     selectRecipeStatus,
     selectRecipesError
 } from "../../Redux/Store/recipeStore";
-import { logout } from "../../Redux/Store/authStore";
+import { IMAGE_BASE_URL } from "../../../config";
 
 const Recipes = () => {
 
@@ -49,34 +47,6 @@ const Recipes = () => {
         setRefreshing(false);
     }
 
-    const deleteRecipe = (item) => {
-        {
-            Alert.alert(`Remove Recipe`, `Are you sure you want to remove '${item.name}'?`, [{
-                text: 'No',
-            }, {
-                text: 'Yes',
-                onPress: () => {
-                    onDeleteHandler(item)
-                }
-            }])
-        }
-    }
-
-    const onDeleteHandler = async (item) => {
-
-        try {
-            await dispatch(removeRecipe(item)).unwrap()
-            dispatch(getAllRecipes(search));
-            Toast.show({
-                type: 'success',
-                text1: 'Recipe Removed!'
-            })
-        } catch (err) {
-            console.log('Failed to delete recipe', err)
-        }
-
-    }
-
     return (
         <View style={styles.cont}>
 
@@ -99,13 +69,22 @@ const Recipes = () => {
                 }
             >
 
-                <List
-                    items={recipes}
-                    itemDisplayKey="name"
-                    itemPress={(item) => { viewRecipe(item) }}
-                    itemDeletePress={(item) => deleteRecipe(item)}
-                    err={'No recipes found...'}
-                />
+                {recipes.length > 0 ?
+                    <FlatList
+                        data={recipes}
+                        renderItem={({ item }) =>
+                            <Card
+                                onPress={() => viewRecipe(item)}
+                                title={item.name}
+                                subTitle={item.duration}
+                                bottomText={item.user.username}
+                                image={item.images[0]}
+                            />
+                        }
+                    />
+                    :
+                    <Text style={{ padding: 10 }}>No Recipes found...</Text>
+                }
 
                 {recipesStatus === 'failed' &&
                     <View style={styles.errCont}>

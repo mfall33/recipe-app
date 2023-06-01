@@ -11,7 +11,6 @@ import {
   REGISTER,
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Keychain from 'react-native-keychain';
 
 import recipeStore from './recipeStore';
 import authStore from './authStore';
