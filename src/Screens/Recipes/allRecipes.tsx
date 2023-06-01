@@ -80,6 +80,7 @@ const Recipes = () => {
                                 bottomText={item.user.username}
                                 image={item.images[0]}
                                 createdAt={item.created_at}
+                                onLikePress={() => alert(33)}
                             />
                         }
                     /> :

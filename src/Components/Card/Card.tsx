@@ -6,6 +6,7 @@ import { IMAGE_BASE_URL } from "../../../config";
 type CardProps = {
     onPress?: () => void;
     onDeletePress?: () => void;
+    onLikePress?: () => void;
     title: string;
     image: string;
     subTitle: string;
@@ -13,7 +14,7 @@ type CardProps = {
     bottomText: string;
 }
 
-const Card = ({ title, subTitle, image, bottomText, createdAt, onPress, onDeletePress }: CardProps) => {
+const Card = ({ title, subTitle, image, bottomText, createdAt, onPress, onDeletePress, onLikePress }: CardProps) => {
 
     let source = require('../../../assets/images/cooking-stock.jpeg');
 
@@ -44,16 +45,24 @@ const Card = ({ title, subTitle, image, bottomText, createdAt, onPress, onDelete
                 imageStyle={styles.imgContImage}
                 resizeMode={"cover"}
                 source={source}>
+
                 <View style={styles.innerCont}>
-                    {onDeletePress &&
+                {onDeletePress &&
                         <TouchableOpacity style={styles.deleteBtnCont} onPress={onDeletePress}>
                             <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Delete.png')} />
                         </TouchableOpacity>
                     }
+                    
+                    {onLikePress &&
+                        <TouchableOpacity style={styles.deleteBtnCont} onPress={onLikePress}>
+                            <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Heart-Empty.png')} />
+                        </TouchableOpacity>
+                    }
+                    
                     <View style={styles.bottomCont}>
                         <Text style={styles.title}>{title}</Text>
-                        <Text style={styles.subTitle}>({subTitle})</Text>
-                        <Text style={styles.bottomText}>Made by: <Text style={{ fontStyle: 'normal', fontWeight: '600' }}>{bottomText}</Text></Text>
+                        <Text style={styles.subTitle}>{subTitle}</Text>
+                        <Text style={styles.bottomText}>Made by: <Text style={{ fontStyle: 'italic', fontWeight: '600' }}>{bottomText}</Text></Text>
                         <Text style={styles.bottomText}>{timeAgo()}</Text>
                     </View>
                 </View>
@@ -106,7 +115,6 @@ const styles = StyleSheet.create({
     bottomText: {
         fontSize: 16,
         fontWeight: '500',
-        fontStyle: 'italic',
         color: WHITE
     },
     deleteBtnCont: {

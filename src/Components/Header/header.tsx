@@ -1,5 +1,5 @@
 import { View, StyleSheet, Text, TextInput, TouchableOpacity, Image } from "react-native";
-import { BLACK, RED, TURQOISE, TURQOISE_OP, WHITE } from "../../Constants/Colors";
+import { BLACK, TURQOISE, TURQOISE_OP, WHITE } from "../../Constants/Colors";
 
 type HeaderProps = {
     backBtnPress?: () => void,
@@ -15,7 +15,7 @@ const Header = ({ backBtnPress, onChange, onSubmit, onCancel, subTitle, search }
     return <View style={styles.header}>
         {backBtnPress &&
             <TouchableOpacity style={styles.backBtnCont} onPress={backBtnPress}>
-                <Image source={require('../../../assets/images/Icons/Back.png')} style={{ tintColor: WHITE, width: 30, height: 30 }} />
+                <Image source={require('../../../assets/images/Icons/Back.png')} style={styles.backBtn} />
             </TouchableOpacity>
         }
         <View>
@@ -49,7 +49,7 @@ const styles = StyleSheet.create({
         backgroundColor: TURQOISE_OP,
         paddingVertical: 10,
         borderBottomColor: WHITE,
-        borderBottomWidth: 1
+        borderBottomWidth: 1,
     },
     title: {
         fontSize: 25,
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         opacity: 0.9,
         backgroundColor: WHITE,
-        borderWidth: 2, 
+        borderWidth: 2,
         borderColor: TURQOISE_OP,
         borderRadius: 20,
         height: '50%',
@@ -111,9 +111,9 @@ const styles = StyleSheet.create({
         left: 0
     },
     backBtn: {
-        color: WHITE,
-        fontSize: 15,
-        fontWeight: '600'
+        tintColor: WHITE,
+        width: 30,
+        height: 30
     }
 })
 
