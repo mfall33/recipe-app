@@ -1,5 +1,5 @@
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
-import { TURQOISE, TURQOISE_OP, WHITE } from "../../Constants/Colors";
+import { Image, StyleSheet, TouchableOpacity } from "react-native";
+import { TURQOISE_OP, WHITE } from "../../Constants/Colors";
 
 type PlusButtonProps = {
     onPress?: () => void
@@ -9,7 +9,7 @@ const PlusButton = ({ onPress }: PlusButtonProps) => {
 
     return (
         <TouchableOpacity style={styles.cont} onPress={onPress}>
-            <Text style={styles.plus}>+</Text>
+            <Image style={styles.plus} source={require('../../../assets/images/Icons/Plus.png')} />
         </TouchableOpacity>
     )
 
@@ -29,14 +29,14 @@ const styles = StyleSheet.create({
         backgroundColor: TURQOISE_OP,
         borderColor: WHITE,
         borderWidth: 2,
+        padding: 15,
         width: 60,
         height: 60,
     },
     plus: {
-        fontSize: 30,
-        fontWeight: '500',
-        lineHeight: 30,
-        color: WHITE,
+        width: '100%',
+        height: '100%',
+        tintColor: WHITE
     },
 });
 

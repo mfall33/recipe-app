@@ -79,11 +79,14 @@ const Recipes = () => {
                                 subTitle={item.duration}
                                 bottomText={item.user.username}
                                 image={item.images[0]}
+                                createdAt={item.created_at}
                             />
                         }
-                    />
-                    :
-                    <Text style={{ padding: 10 }}>No Recipes found...</Text>
+                    /> :
+                    <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
+                        <Text style={{ padding: 10, textAlign: 'center', fontSize: 20, fontWeight: '500', marginBottom: 50 }}>No Recipes found...</Text>
+                        <Image source={require('../../../assets/images/Icons/Flour.png')} style={{ width: '100%', height: 250, resizeMode: 'contain' }} />
+                    </View>
                 }
 
                 {recipesStatus === 'failed' &&

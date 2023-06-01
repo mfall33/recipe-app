@@ -13,7 +13,7 @@ import { RegisterScreen } from '../../src/Screens/Register';
 import { ForgotPasswordScreen } from '../../src/Screens/ForgotPassword';
 import { ProfileScreen } from '../../src/Screens/Profile';
 import { SettingsScreen } from '../Screens/Settings';
-import { TURQOISE, WHITE } from '../Constants/Colors';
+import { TURQOISE, TURQOISE_OP, WHITE } from '../Constants/Colors';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -37,7 +37,7 @@ const MainNavigator = () => {
 
     const tabBarOptions = {
         tabBarItemStyle: styles.tabBarItemStyle,
-        tabBarActiveBackgroundColor: TURQOISE,
+        tabBarActiveBackgroundColor: TURQOISE_OP,
         tabBarActiveTintColor: WHITE,
         tabBarInactiveTintColor: TURQOISE,
         tabBarLabelStyle: styles.tabBarLabelStyle,

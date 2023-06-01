@@ -1,5 +1,5 @@
-import { View, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
-import { BLACK, ORANGE, TURQOISE, WHITE } from "../../Constants/Colors";
+import { View, StyleSheet, Text, TextInput, TouchableOpacity, Image } from "react-native";
+import { BLACK, RED, TURQOISE, TURQOISE_OP, WHITE } from "../../Constants/Colors";
 
 type HeaderProps = {
     backBtnPress?: () => void,
@@ -15,7 +15,7 @@ const Header = ({ backBtnPress, onChange, onSubmit, onCancel, subTitle, search }
     return <View style={styles.header}>
         {backBtnPress &&
             <TouchableOpacity style={styles.backBtnCont} onPress={backBtnPress}>
-                <Text style={styles.backBtn}>{"Back"}</Text>
+                <Image source={require('../../../assets/images/Icons/Back.png')} style={{ tintColor: WHITE, width: 30, height: 30 }} />
             </TouchableOpacity>
         }
         <View>
@@ -36,7 +36,7 @@ const Header = ({ backBtnPress, onChange, onSubmit, onCancel, subTitle, search }
                 <TouchableOpacity
                     style={styles.searchClose}
                     onPress={onCancel}>
-                    <Text style={styles.searchCloseIcon}>X</Text>
+                    <Image style={styles.searchCloseIcon} source={require('../../../assets/images/Icons/Close.png')} />
                 </TouchableOpacity>
             </View>
         }
@@ -46,7 +46,7 @@ const Header = ({ backBtnPress, onChange, onSubmit, onCancel, subTitle, search }
 
 const styles = StyleSheet.create({
     header: {
-        backgroundColor: TURQOISE,
+        backgroundColor: TURQOISE_OP,
         paddingVertical: 10,
         borderBottomColor: WHITE,
         borderBottomWidth: 1
@@ -78,19 +78,22 @@ const styles = StyleSheet.create({
     searchClose: {
         position: 'absolute',
         right: 16,
+        padding: 7,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
         opacity: 0.9,
-        backgroundColor: TURQOISE,
+        backgroundColor: WHITE,
+        borderWidth: 2, 
+        borderColor: TURQOISE_OP,
         borderRadius: 20,
         height: '50%',
         margin: 'auto'
     },
     searchCloseIcon: {
-        color: WHITE,
-        fontWeight: '600',
-        paddingHorizontal: 7
+        tintColor: TURQOISE,
+        height: 14,
+        width: 14
     },
     search: {
         backgroundColor: WHITE,

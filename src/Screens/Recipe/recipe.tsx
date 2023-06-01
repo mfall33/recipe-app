@@ -1,4 +1,5 @@
-import { useCallback, useRef, useState } from "react";
+import moment from 'moment';
+import { useCallback, useMemo, useRef, useState } from "react";
 import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -29,6 +30,22 @@ const Recipe = () => {
 
     const nameRef = useRef(null);
     const durationRef = useRef(null);
+
+    const timeAgo = useMemo(() => {
+        const duration = moment.duration(moment().diff(recipe.created_at));
+
+        if (duration.asSeconds() < 60) {
+            return `${Math.floor(duration.asSeconds())} seconds ago`;
+        } else if (duration.asMinutes() < 60) {
+            return `${Math.floor(duration.asMinutes())} minutes ago`;
+        } else if (duration.asHours() < 24) {
+            return `${Math.floor(duration.asHours())} hours ago`;
+        } else if (duration.asDays() < 365) {
+            return `${Math.floor(duration.asDays())} days ago`;
+        } else {
+            return `${Math.floor(duration.asYears())} years ago`;
+        }
+    }, [recipe.created_at]);
 
     useFocusEffect(
         useCallback(() => {
@@ -145,7 +162,8 @@ const Recipe = () => {
             <Header backBtnPress={() => navigation.goBack()} subTitle={recipe.name} />
 
             <View style={[{ borderBottomColor: TURQOISE, borderBottomWidth: 2 }, styles.pad]}>
-                <Text style={{ fontSize: 18 }}><Text style={{ fontWeight: '600', color: TURQOISE }}>Made by: </Text><Text style={{ fontStyle: 'italic', color: TURQOISE }}>{recipe.user.username}</Text></Text>
+                <Text style={{ fontSize: 18, color: TURQOISE }}><Text style={{ fontWeight: '600' }}>Made by: </Text><Text style={{ fontStyle: 'italic', color: TURQOISE }}>{recipe.user.username}</Text></Text>
+                <Text style={{ fontSize: 18, color: TURQOISE }}>{timeAgo}</Text>
             </View>
 
             <ScrollView contentContainerStyle={styles.cont} showsVerticalScrollIndicator={false}>

@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { TURQOISE, WHITE, YELLOW } from "../../Constants/Colors";
+import { TURQOISE, TURQOISE_OP, WHITE, YELLOW } from "../../Constants/Colors";
 
 export const styles = StyleSheet.create({
     mainCont: {
@@ -68,7 +68,7 @@ export const styles = StyleSheet.create({
         fontStyle: 'italic'
     },
     btnCont: {
-        backgroundColor: TURQOISE,
+        backgroundColor: TURQOISE_OP,
         paddingHorizontal: 10,
         paddingBottom: 10
     },
