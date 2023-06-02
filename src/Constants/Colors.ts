@@ -7,6 +7,8 @@ const YELLOW = '#ffb703';
 const ORANGE = '#fb8500';
 const RED = '#d63131';
 
+const RED_OP = 'rgba(214, 49, 49, 0.5)';
+
 const BLACK_OP_LIGHT = 'rgba(0, 0, 0, 0.3)';
 const BLACK_OP_HEAVY = 'rgba(0, 0, 0, 0.7)';
 
@@ -14,4 +16,4 @@ const TURQOISE_OP = 'rgba(33, 158, 188, 0.7)';
 const WHITE_OP = 'rgba(255, 255, 255, 0.5)';
 
 
-export { LIGHTBLUE, DARKBLUE, TURQOISE, TURQOISE_OP, YELLOW, ORANGE, WHITE, WHITE_OP, BLACK, BLACK_OP_LIGHT, BLACK_OP_HEAVY, RED }
+export { LIGHTBLUE, DARKBLUE, TURQOISE, TURQOISE_OP, YELLOW, ORANGE, WHITE, WHITE_OP, BLACK, BLACK_OP_LIGHT, BLACK_OP_HEAVY, RED, RED_OP }

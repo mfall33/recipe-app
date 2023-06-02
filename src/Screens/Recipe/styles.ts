@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { TURQOISE, TURQOISE_OP, WHITE, YELLOW } from "../../Constants/Colors";
+import { BLACK_OP_LIGHT, TURQOISE, WHITE } from "../../Constants/Colors";
 
 export const styles = StyleSheet.create({
     mainCont: {
@@ -22,13 +22,12 @@ export const styles = StyleSheet.create({
         color: TURQOISE
     },
     topImg: {
-        width: 180, height: 180
-    },
-    topImgCont: {
+        width: 180,
+        height: 180
     },
     topImgContCont: {
         paddingLeft: 20,
-        paddingVertical: 20,
+        paddingBottom: 20,
         borderBottomWidth: 2,
         borderTopWidth: 0,
         borderColor: TURQOISE
@@ -36,39 +35,7 @@ export const styles = StyleSheet.create({
     bottomImg: {
         opacity: 0.6
     },
-    imgSelectBtnCont: {
-        borderTopWidth: 2,
-        borderBottomWidth: 2,
-        borderColor: TURQOISE,
-        marginTop: 10,
-        paddingBottom: 20
-    },
-    imgSelectBtn: {
-        width: '100%',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: WHITE,
-        height: 150,
-        borderRadius: 15,
-        borderColor: TURQOISE,
-        borderWidth: 1,
-        marginTop: 10
-    },
-    imgSelectPlus: {
-        fontSize: 45,
-        textAlign: 'center',
-        color: TURQOISE
-    },
-    imgSelectText: {
-        fontSize: 25,
-        textAlign: 'center',
-        color: TURQOISE,
-        fontStyle: 'italic'
-    },
     btnCont: {
-        backgroundColor: TURQOISE_OP,
         paddingHorizontal: 10,
         paddingBottom: 10
     },
@@ -83,5 +50,39 @@ export const styles = StyleSheet.create({
         width: 320,
         backgroundColor: WHITE,
         borderRadius: 10
+    },
+    imgBackground: {
+        height: 250,
+        display: 'flex',
+        justifyContent: 'flex-end'
+    },
+    imgBackgroundCont: {
+        backgroundColor: BLACK_OP_LIGHT,
+        padding: 10,
+        display: 'flex',
+        justifyContent: 'space-between',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        alignItems: 'center'
+    },
+    whiteAndItalic: {
+        color: WHITE,
+        fontStyle: 'italic'
+    },
+    actionBtnCont: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
+    actionBtn: {
+        borderWidth: 1,
+        marginLeft: 10,
+        borderRadius: 50,
+        borderColor: TURQOISE,
+        padding: 10,
+    },
+    actionBtnImg: {
+        width: 30,
+        height: 30,
+        tintColor: WHITE
     }
 });

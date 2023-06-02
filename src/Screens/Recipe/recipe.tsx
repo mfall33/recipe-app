@@ -1,15 +1,15 @@
 import moment from 'moment';
 import { useCallback, useMemo, useRef, useState } from "react";
-import { Alert, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import Modal from "react-native-modal";
 
-import { TextInput, Button, Header, ImageContainer } from "../../Components";
+import { TextInput, Button, Header, ImageContainer, TitleMd, ParaSm } from "../../Components";
 import { useRecipes } from "../../Hooks";
 import { styles } from "./styles";
-import { RED, TURQOISE, WHITE } from "../../Constants/Colors";
+import { RED_OP, TURQOISE_OP, WHITE } from "../../Constants/Colors";
 import { IMAGE_BASE_URL } from "../../../config";
 
 const Recipe = () => {
@@ -46,6 +46,18 @@ const Recipe = () => {
             return `${Math.floor(duration.asYears())} years ago`;
         }
     }, [recipe.created_at]);
+
+    const mainImg = useMemo(() => {
+
+        let image = require('../../../assets/images/cooking-stock.jpeg');
+
+        if (recipe?.images.length > 0) {
+            image = { uri: `${IMAGE_BASE_URL}${recipe.images[0]}` }
+        }
+
+        return image;
+
+    }, [recipe.images])
 
     useFocusEffect(
         useCallback(() => {
@@ -159,19 +171,48 @@ const Recipe = () => {
                 </View>
             </Modal>
 
-            <Header backBtnPress={() => navigation.goBack()} subTitle={recipe.name} />
-
-            <View style={[{ borderBottomColor: TURQOISE, borderBottomWidth: 2 }, styles.pad]}>
-                <Text style={{ fontSize: 18, color: TURQOISE }}><Text style={{ fontWeight: '600' }}>Made by: </Text><Text style={{ fontStyle: 'italic', color: TURQOISE }}>{recipe.user.username}</Text></Text>
-                <Text style={{ fontSize: 18, color: TURQOISE }}>{timeAgo}</Text>
-            </View>
+            <Header backBtnPress={() => navigation.goBack()} />
 
             <ScrollView contentContainerStyle={styles.cont} showsVerticalScrollIndicator={false}>
 
-                {recipe.images?.length > 0 &&
+                <ImageBackground
+                    style={styles.imgBackground}
+                    source={mainImg}>
+                    <View style={styles.imgBackgroundCont}>
+                        <View>
+                            <TitleMd style={{ color: WHITE }}>{recipe.name}</TitleMd>
+                            <ParaSm style={styles.whiteAndItalic}>{timeAgo}</ParaSm>
+                            <ParaSm style={styles.whiteAndItalic}>{recipe.user.username}</ParaSm>
+                        </View>
+                        <View style={styles.actionBtnCont}>
+                            <TouchableOpacity
+                                style={[styles.actionBtn, { backgroundColor: TURQOISE_OP }]}
+                                onPress={() => handleImageSelection()}>
+                                <Image source={require('../../../assets/images/Icons/Image-Add.png')}
+                                    style={styles.actionBtnImg} />
+                            </TouchableOpacity>
+                            <TouchableOpacity style={[styles.actionBtn, { backgroundColor: RED_OP }]}
+                                onPress={
+                                    () => Alert.alert(`Remove Recipe`, `Are you sure you want to remove '${recipe.name}'?`, [
+                                        { text: 'No', },
+                                        {
+                                            text: 'Yes',
+                                            onPress: () => {
+                                                deleteRecipe()
+                                            }
+                                        }])
+                                } >
+                                <Image
+                                    source={require('../../../assets/images/Icons/Delete.png')}
+                                    style={styles.actionBtnImg} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </ImageBackground>
+
+                {recipe.images?.length > 1 &&
                     <View>
                         <ImageContainer
-                            style={styles.topImgCont}
                             imgStyle={styles.topImg}
                             images={recipe.images}
                             imgUrlPrefix={IMAGE_BASE_URL}
@@ -220,16 +261,6 @@ const Recipe = () => {
 
                 </View>
 
-                <View style={[styles.pad, styles.imgSelectBtnCont]}>
-                    <TouchableOpacity onPress={() => handleImageSelection()}
-                        style={styles.imgSelectBtn}>
-                        <View>
-                            <Text style={styles.imgSelectPlus}>+</Text>
-                            <Text style={styles.imgSelectText}>Add some images</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
                 <View style={styles.pad}>
 
                     <ImageContainer
@@ -253,21 +284,7 @@ const Recipe = () => {
             <View style={styles.btnCont}>
 
                 <Button
-                    style={{ backgroundColor: RED, borderColor: WHITE }}
-                    text={`Delete '${recipe.name}'`}
-                    onPress={
-                        () => Alert.alert(`Remove Recipe`, `Are you sure you want to remove '${recipe.name}'?`, [
-                            { text: 'No', },
-                            {
-                                text: 'Yes',
-                                onPress: () => {
-                                    deleteRecipe()
-                                }
-                            }])
-                    } />
-
-                <Button
-                    text={`Update '${recipe.name}'!`}
+                    text={`UPDATE`}
                     style={{ borderColor: WHITE }}
                     onPress={() => {
                         editRecipe({ name, duration, successCallback: updateSuccess, errCallback: updateFailure })

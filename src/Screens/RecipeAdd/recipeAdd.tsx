@@ -1,16 +1,17 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { launchImageLibrary } from 'react-native-image-picker';
-import { useCallback, useRef, useState } from "react";
-import { ScrollView, View, Alert, TouchableOpacity, Text, Image } from "react-native";
+import { useCallback, useMemo, useRef, useState } from "react";
+import { ScrollView, View, Alert, TouchableOpacity, Text, Image, ImageBackground } from "react-native";
 import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
 
-import { TitleLg, ParaMd, TextInput, Button, Header, ImageContainer } from "../../Components";
+import { TitleLg, ParaMd, TextInput, Button, Header, ImageContainer, ParaSm, TitleMd } from "../../Components";
 import { useRecipes } from "../../Hooks";
 import { styles } from "./styles";
 import { addRecipe } from "../../Redux/Store/recipeStore";
 import Modal from "react-native-modal";
-import { RED, WHITE } from "../../Constants/Colors";
+import { TURQOISE_OP, WHITE } from "../../Constants/Colors";
+import { IMAGE_BASE_URL } from "../../../config";
 
 const RecipeAdd = () => {
 
@@ -40,6 +41,20 @@ const RecipeAdd = () => {
         }, [])
 
     );
+
+    const mainImg = useMemo(() => {
+
+        let image = require('../../../assets/images/cooking-stock.jpeg');
+
+        if (photos.length > 0) {
+            image = {
+                uri: photos[0].uri
+            }
+        }
+
+        return image;
+
+    }, [photos]);
 
     const clearErrors = () => {
         setNameErrors([]);
@@ -88,7 +103,7 @@ const RecipeAdd = () => {
 
             })
             .catch(function (error) {
-                console.log("Error: " + JSON.stringify(error))  
+                console.log("Error: " + JSON.stringify(error))
                 Toast.show({
                     type: 'error',
                     text1: 'Something went wrong.. please try again.'
@@ -191,10 +206,41 @@ const RecipeAdd = () => {
 
             <ScrollView showsVerticalScrollIndicator={false}>
 
-                <View>
-                    <TitleLg style={styles.title}>New Recipe</TitleLg>
-                    <ParaMd style={styles.duration}>Create your new Recipe!</ParaMd>
-                </View>
+                <ImageBackground
+                    style={styles.imgBackground}
+                    source={mainImg}>
+                    <View style={styles.imgBackgroundCont}>
+                        <View>
+                            <TitleMd style={{ color: WHITE }}>New Recipe</TitleMd>
+                            <ParaSm style={styles.whiteAndItalic}>Create your new masterpiece!</ParaSm>
+                        </View>
+                        <View style={styles.actionBtnCont}>
+                            <TouchableOpacity
+                                style={[styles.actionBtn, { backgroundColor: TURQOISE_OP }]}
+                                onPress={() => handleImageSelection()}>
+                                <Image source={require('../../../assets/images/Icons/Image-Add.png')}
+                                    style={styles.actionBtnImg} />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </ImageBackground>
+
+                {photos.length > 0 &&
+                    <ImageContainer
+                        images={photos.map(photo => photo.uri)}
+                        onPress={(image) => showModal(image)}
+                        contStyle={styles.topImgContCont}
+                        imgStyle={styles.bottomImg}
+                        onDeletePress={(image) => {
+                            Alert.alert(`Delete image`, `Are you sure you want to delete this image?`, [
+                                { text: 'No', },
+                                {
+                                    text: 'Yes',
+                                    onPress: () => setPhotos(photos.filter(photo => photo.uri !== image))
+                                }])
+                        }}
+                    />
+                }
 
                 <View style={styles.pad}>
 
@@ -222,40 +268,12 @@ const RecipeAdd = () => {
 
                 </View>
 
-                <View style={[styles.pad, styles.imgSelectBtnCont]}>
-                    <TouchableOpacity onPress={() => handleImageSelection()}
-                        style={styles.imgSelectBtn}>
-                        <View>
-                            <Text style={styles.imgSelectPlus}>+</Text>
-                            <Text style={styles.imgSelectText}>Add some images</Text>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={styles.pad}>
-
-                    <ImageContainer
-                        images={photos.map(photo => photo.uri)}
-                        onPress={(image) => showModal(image)}
-                        imgStyle={styles.bottomImg}
-                        onDeletePress={(image) => {
-                            Alert.alert(`Delete image`, `Are you sure you want to delete this image?`, [
-                                { text: 'No', },
-                                {
-                                    text: 'Yes',
-                                    onPress: () => setPhotos(photos.filter(photo => photo.uri !== image))
-                                }])
-                        }}
-                    />
-
-                </View>
-
             </ScrollView>
 
             <View style={styles.btnCont}>
 
                 <Button
-                    text={`Submit ${name ? `'${name}'` : 'recipe'}!`}
+                    text={`SUBMIT`}
                     style={{ borderColor: WHITE }}
                     onPress={onSubmitHandler}
                     disabled={false}
