@@ -13,7 +13,6 @@ import {
     selectRecipeStatus,
     selectRecipesError
 } from "../../Redux/Store/recipeStore";
-import { IMAGE_BASE_URL } from "../../../config";
 
 const Recipes = () => {
 
@@ -26,7 +25,6 @@ const Recipes = () => {
     const { viewRecipe } = useRecipes();
 
     const recipesStatus = useSelector(selectRecipeStatus)
-    const recipesError = useSelector(selectRecipesError)
     const recipes = useSelector(selectAllRecipes)
 
     useEffect(() => {
@@ -52,7 +50,6 @@ const Recipes = () => {
 
             <Header
                 search={search}
-                subTitle="All Recipes"
                 onChange={(e) => setSearch(e)}
                 onSubmit={() => { dispatch(getAllRecipes(search)); }}
                 onCancel={() => { setSearch('') }} />
@@ -87,12 +84,6 @@ const Recipes = () => {
                     <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
                         <Text style={{ padding: 10, textAlign: 'center', fontSize: 20, fontWeight: '500', marginBottom: 50 }}>No Recipes found...</Text>
                         <Image source={require('../../../assets/images/Icons/Flour.png')} style={{ width: '100%', height: 250, resizeMode: 'contain' }} />
-                    </View>
-                }
-
-                {recipesStatus === 'failed' &&
-                    <View style={styles.errCont}>
-                        <Text style={styles.errText}>{recipesError}</Text>
                     </View>
                 }
 
