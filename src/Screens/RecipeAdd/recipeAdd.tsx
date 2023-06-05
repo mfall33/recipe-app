@@ -94,7 +94,7 @@ const RecipeAdd = () => {
 
                 if (photos.length) uploadPhotos()
 
-                navigation.navigate('Recipe');
+                navigation.replace('Recipe');
 
                 Toast.show({
                     type: 'success',
