@@ -83,6 +83,7 @@ export const styles = StyleSheet.create({
     actionBtnImg: {
         width: 30,
         height: 30,
+        resizeMode: 'contain',
         tintColor: WHITE
     }
 });

@@ -13,6 +13,7 @@ import {
     selectRecipeStatus,
     selectRecipesError
 } from "../../Redux/Store/recipeStore";
+import { likeRecipe } from "../../Redux/Store/recipeStore";
 
 const Recipes = () => {
 
@@ -77,7 +78,8 @@ const Recipes = () => {
                                 bottomText={item.user.username}
                                 image={item.images[0]}
                                 createdAt={item.created_at}
-                                onLikePress={() => alert(33)}
+                                onLikePress={() => dispatch(likeRecipe(item))}
+                                liked={item.liked}
                             />
                         }
                     /> :

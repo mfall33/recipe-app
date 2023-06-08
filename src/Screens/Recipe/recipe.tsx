@@ -11,10 +11,13 @@ import { useRecipes } from "../../Hooks";
 import { styles } from "./styles";
 import { RED_OP, TURQOISE_OP, WHITE } from "../../Constants/Colors";
 import { IMAGE_BASE_URL } from "../../../config";
+import { useDispatch } from 'react-redux';
+import { likeRecipe } from '../../Redux/Store/recipeStore';
 
 const Recipe = () => {
 
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
     const { recipe, deleteRecipe, editRecipe, deleteImage, addImage } = useRecipes();
 
@@ -60,6 +63,7 @@ const Recipe = () => {
     }, [recipe.images])
 
     useFocusEffect(
+
         useCallback(() => {
             nameRef.current?.focus();
         }, [])
@@ -183,8 +187,14 @@ const Recipe = () => {
                             <TitleMd style={{ color: WHITE }}>{recipe.name}</TitleMd>
                             <ParaSm style={styles.whiteAndItalic}>{timeAgo}</ParaSm>
                             <ParaSm style={styles.whiteAndItalic}>{recipe.user.username}</ParaSm>
+                            <ParaSm style={styles.whiteAndItalic}>{recipe.likes.length} Likes</ParaSm>
                         </View>
                         <View style={styles.actionBtnCont}>
+                            <TouchableOpacity
+                                style={[styles.actionBtn, { backgroundColor: TURQOISE_OP }]} onPress={() => dispatch(likeRecipe(recipe))}>
+                                <Image source={recipe.liked ? require('../../../assets/images/Icons/Heart-Full.png') : require('../../../assets/images/Icons/Heart-Empty.png')}
+                                    style={styles.actionBtnImg} />
+                            </TouchableOpacity>
                             <TouchableOpacity
                                 style={[styles.actionBtn, { backgroundColor: TURQOISE_OP }]}
                                 onPress={() => handleImageSelection()}>

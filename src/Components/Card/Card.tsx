@@ -11,10 +11,20 @@ type CardProps = {
     image: string;
     subTitle: string;
     createdAt: any;
+    liked: boolean
     bottomText: string;
 }
 
-const Card = ({ title, subTitle, image, bottomText, createdAt, onPress, onDeletePress, onLikePress }: CardProps) => {
+const Card = ({
+    title,
+    subTitle,
+    image,
+    bottomText,
+    createdAt,
+    liked = false,
+    onPress,
+    onDeletePress,
+    onLikePress }: CardProps) => {
 
     let source = require('../../../assets/images/cooking-stock.jpeg');
 
@@ -47,18 +57,18 @@ const Card = ({ title, subTitle, image, bottomText, createdAt, onPress, onDelete
                 source={source}>
 
                 <View style={styles.innerCont}>
-                {onDeletePress &&
+                    {onDeletePress &&
                         <TouchableOpacity style={styles.deleteBtnCont} onPress={onDeletePress}>
                             <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Delete.png')} />
                         </TouchableOpacity>
                     }
-                    
+
                     {onLikePress &&
                         <TouchableOpacity style={styles.deleteBtnCont} onPress={onLikePress}>
-                            <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Heart-Empty.png')} />
+                            <Image style={styles.deleteBtnIcon} source={liked ? require('../../../assets/images/Icons/Heart-Full.png') : require('../../../assets/images/Icons/Heart-Empty.png')} />
                         </TouchableOpacity>
                     }
-                    
+
                     <View style={styles.bottomCont}>
                         <Text style={styles.title}>{title}</Text>
                         <Text style={styles.subTitle}>{subTitle}</Text>

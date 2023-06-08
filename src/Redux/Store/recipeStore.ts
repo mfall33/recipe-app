@@ -118,10 +118,6 @@ export const addRecipeImages = createAsyncThunk(
 
     try {
 
-      // untidy... need to revisit this to use the API helper instance...
-      // need to try setting headers for form-data content-type
-      // might need to better structure the body into data.files etc
-
       const response = await API.post(`/recipes/${recipe._id}/image`, data);
 
       return response.data;
@@ -135,10 +131,19 @@ export const addRecipeImages = createAsyncThunk(
 
 export const removeRecipe = createAsyncThunk(
   'recipes/removeRecipe',
-  // The payload creator receives the partial `{title, content, user}` object
   async recipe => {
 
     const response = await API.delete(`/recipes/${recipe._id}`);
+
+    return response.data
+  }
+)
+
+export const likeRecipe = createAsyncThunk(
+  'recipes/likeRecipe',
+  async (recipe) => {
+
+    const response = await API.put(`/recipes/${recipe._id}/like`);
 
     return response.data
   }
@@ -194,6 +199,19 @@ export const recipeSlice = createSlice({
       })
       .addCase(addRecipeImages.fulfilled, (state, action) => {
         state.recipe.images = action.payload.images;
+      })
+      .addCase(likeRecipe.fulfilled, (state, action) => {
+        if ('_id' in action.payload) {
+          state.recipes.forEach(recipe => {
+            if (recipe._id === action.payload._id) {
+              recipe.likes = action.payload.likes;
+              recipe.liked = action.payload.liked;
+            }
+          });
+
+          state.recipe.likes = action.payload.likes;
+          state.recipe.liked = action.payload.liked;
+        }
       })
   }
 })
