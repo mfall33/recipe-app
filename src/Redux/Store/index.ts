@@ -15,6 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import recipeStore from './recipeStore';
 import authStore from './authStore';
 import userStore from './userStore';
+import collectionStore from './collectionStore';
 
 const authPersistConfig = {
   key: 'auth',
@@ -32,7 +33,8 @@ const userPersistConfig = {
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authStore),
   user: persistReducer(userPersistConfig, userStore),
-  recipes: recipeStore
+  recipes: recipeStore,
+  collections: collectionStore
 });
 
 export const store = configureStore({

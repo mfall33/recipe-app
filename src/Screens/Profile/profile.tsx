@@ -19,6 +19,7 @@ const Profile = () => {
             <ScrollView contentContainerStyle={styles.cont} showsVerticalScrollIndicator={false}>
 
                 <ListButton text="My Recipes" onPress={() => navigation.navigate('MyRecipes')} />
+                <ListButton text="My Collections" onPress={() => navigation.navigate('Collections')} />
                 <ListButton text="Liked Recipes" onPress={() => navigation.navigate('LikedRecipes')} />
                 <ListButton text="Settings" onPress={() => navigation.navigate('Settings')} />
                 <ListButton text="Log-Out" onPress={() => dispatch(logout(false))} />

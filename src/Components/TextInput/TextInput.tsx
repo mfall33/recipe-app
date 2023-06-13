@@ -58,7 +58,11 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: TURQOISE,
         padding: 10,
-        color: TURQOISE
+        color: TURQOISE,
+        shadowColor: '#171717',
+        shadowOffset: { width: 2, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
     },
     err: {
         marginTop: 5,

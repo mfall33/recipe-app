@@ -7,6 +7,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { selectLoggedIn } from "../Redux/Store/authStore";
 import { AllRecipesScreen, LikedRecipesScreen, MyRecipesScreen } from '../../src/Screens/Recipes';
 import { RecipeScreen } from '../../src/Screens/Recipe';
+
+import { CollectionsScreen } from '../../src/Screens/Collections';
+
 import { RecipeAddScreen } from '../../src/Screens/RecipeAdd';
 import { LoginScreen } from '../../src/Screens/Login';
 import { RegisterScreen } from '../../src/Screens/Register';
@@ -91,6 +94,7 @@ const AllRecipesTab = () => {
             <Stack.Screen name="LikedRecipes" component={LikedRecipesScreen} />
             <Stack.Screen name="Recipe" component={RecipeScreen} />
             <Stack.Screen name="RecipeAdd" component={RecipeAddScreen} />
+            <Stack.Screen name="Collections" component={CollectionsScreen} />
         </Stack.Navigator>
     )
 

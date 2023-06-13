@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     searchCloseIcon: {
         tintColor: TURQOISE,
         height: 18,
-        width: 18
+        width: 18,
     },
     search: {
         backgroundColor: WHITE,

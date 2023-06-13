@@ -1,5 +1,5 @@
 import { Image, StyleSheet, TouchableOpacity } from "react-native";
-import { TURQOISE_OP, WHITE } from "../../Constants/Colors";
+import { BLACK, TURQOISE_OP, WHITE } from "../../Constants/Colors";
 
 type PlusButtonProps = {
     onPress?: () => void
@@ -32,6 +32,10 @@ const styles = StyleSheet.create({
         padding: 15,
         width: 60,
         height: 60,
+        shadowColor: BLACK,
+        shadowOffset: { width: -2, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
     },
     plus: {
         width: '100%',

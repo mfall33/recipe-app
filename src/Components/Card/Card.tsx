@@ -88,7 +88,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         paddingTop: 10,
         borderRadius: 15,
-        flex: 1
+        flex: 1,
+        shadowColor: '#171717',
+        shadowOffset: { width: -2, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 3,
     },
     imgCont: {
         height: 250
