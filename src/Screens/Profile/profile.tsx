@@ -1,4 +1,3 @@
-import { useCallback, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
@@ -19,11 +18,10 @@ const Profile = () => {
 
             <ScrollView contentContainerStyle={styles.cont} showsVerticalScrollIndicator={false}>
 
-            <ListButton text="My Recipes" onPress={() => navigation.navigate('MyRecipes')} />
-            <ListButton text="Liked Recipes" onPress={() => navigation.navigate('MyRecipes')} />
-            <ListButton text="Settings" onPress={() => navigation.navigate('Settings')} />
-            <ListButton text="Log-Out" onPress={() => dispatch(logout(false))} />
-
+                <ListButton text="My Recipes" onPress={() => navigation.navigate('MyRecipes')} />
+                <ListButton text="Liked Recipes" onPress={() => navigation.navigate('LikedRecipes')} />
+                <ListButton text="Settings" onPress={() => navigation.navigate('Settings')} />
+                <ListButton text="Log-Out" onPress={() => dispatch(logout(false))} />
 
             </ScrollView>
 

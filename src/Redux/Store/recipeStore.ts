@@ -131,11 +131,19 @@ export const addRecipeImages = createAsyncThunk(
 
 export const removeRecipe = createAsyncThunk(
   'recipes/removeRecipe',
-  async recipe => {
+  async (recipe, { rejectWithValue }) => {
+    try {
 
-    const response = await API.delete(`/recipes/${recipe._id}`);
+      const response = await API.delete(`/recipes/${recipe._id}`);
+      if (response.status !== 200) {
+        return rejectWithValue(response.data);
+      }
 
-    return response.data
+      return response.data
+
+    } catch (err) {
+      return error?.response?.data;
+    }
   }
 )
 

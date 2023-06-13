@@ -78,22 +78,17 @@ const styles = StyleSheet.create({
     searchClose: {
         position: 'absolute',
         right: 16,
-        padding: 7,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        opacity: 0.9,
-        backgroundColor: WHITE,
-        borderWidth: 2,
-        borderColor: TURQOISE_OP,
-        borderRadius: 20,
+        borderColor: TURQOISE,
         height: '50%',
         margin: 'auto'
     },
     searchCloseIcon: {
         tintColor: TURQOISE,
-        height: 14,
-        width: 14
+        height: 18,
+        width: 18
     },
     search: {
         backgroundColor: WHITE,

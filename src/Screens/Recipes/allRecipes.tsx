@@ -5,13 +5,12 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { styles } from "./styles";
 import { useRecipes } from "../../Hooks";
-import { TURQOISE, WHITE } from "../../Constants/Colors";
+import { TURQOISE, TURQOISE_OP } from "../../Constants/Colors";
 import { Card, PlusBtn, Header } from "../../Components";
 import {
     getAllRecipes,
     selectAllRecipes,
     selectRecipeStatus,
-    selectRecipesError
 } from "../../Redux/Store/recipeStore";
 import { likeRecipe } from "../../Redux/Store/recipeStore";
 
@@ -84,7 +83,7 @@ const Recipes = () => {
                         }
                     /> :
                     <View style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', padding: 10 }}>
-                        <Text style={{ padding: 10, textAlign: 'center', fontSize: 20, fontWeight: '500', marginBottom: 50 }}>No Recipes found...</Text>
+                        <Text style={{ padding: 10, textAlign: 'center', fontSize: 24, fontWeight: '400', fontStyle: 'italic', marginTop: 60 }}>Oops! Looks like the <Text style={{ color: TURQOISE_OP }}>recipes</Text> went on vacation. Don't worry, we'll whip up a fresh batch of tasty ideas in no time!...</Text>
                         <Image source={require('../../../assets/images/Icons/Flour.png')} style={{ width: '100%', height: 250, resizeMode: 'contain' }} />
                     </View>
                 }

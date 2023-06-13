@@ -41,7 +41,7 @@ export const signin = createAsyncThunk(
       this but the response interceptor will set the
       access token behind the scenes
       */
-      const response = await API.post(`/auth/signin`, user)
+      const response = await API.post(`/auth/signin`, user);
 
       return response.data;
 

@@ -3,6 +3,7 @@ import { BASE_URL } from '../../config';
 import { store } from '../Redux/Store';
 import { logout, refreshTokens } from '../Redux/Store/authStore';
 
+// NEED TO CREATE AUTH INSTANCE AND UNAUTHD INSTANCES
 const instance = axios.create({
     baseURL: BASE_URL,
     validateStatus: () => true
@@ -10,6 +11,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
     (config) => {
+
+        console.log("CONFIG: " + JSON.stringify(config));
 
         const { auth } = store.getState();
         const { accessToken } = auth;

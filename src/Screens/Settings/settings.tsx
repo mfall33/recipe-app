@@ -6,7 +6,7 @@ import { ScrollView, View } from "react-native";
 import { styles } from "./styles";
 import { useDispatch, useSelector } from "react-redux";
 import { Button, Header, TextInput } from "../../Components";
-import { selectUsername, selectEmail, updateUsername, setUser } from "../../Redux/Store/userStore";
+import { selectUsername, selectEmail, updateUsername } from "../../Redux/Store/userStore";
 
 const Settings = () => {
 

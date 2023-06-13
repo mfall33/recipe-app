@@ -5,7 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import { selectLoggedIn } from "../Redux/Store/authStore";
-import { AllRecipesScreen, MyRecipesScreen } from '../../src/Screens/Recipes';
+import { AllRecipesScreen, LikedRecipesScreen, MyRecipesScreen } from '../../src/Screens/Recipes';
 import { RecipeScreen } from '../../src/Screens/Recipe';
 import { RecipeAddScreen } from '../../src/Screens/RecipeAdd';
 import { LoginScreen } from '../../src/Screens/Login';
@@ -88,6 +88,7 @@ const AllRecipesTab = () => {
         <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="Recipes" component={AllRecipesScreen} />
             <Stack.Screen name="MyRecipes" component={MyRecipesScreen} />
+            <Stack.Screen name="LikedRecipes" component={LikedRecipesScreen} />
             <Stack.Screen name="Recipe" component={RecipeScreen} />
             <Stack.Screen name="RecipeAdd" component={RecipeAddScreen} />
         </Stack.Navigator>

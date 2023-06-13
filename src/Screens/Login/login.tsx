@@ -14,8 +14,11 @@ const Login = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
-    const [username, setUsername] = useState<String>('');
-    const [password, setPassword] = useState<String>('');
+    // const [username, setUsername] = useState<String>('matthewfallon@gmail.com');
+    // const [password, setPassword] = useState<String>('Matthewfallon33!');
+
+    const [username, setUsername] = useState<String>('mfal33');
+    const [password, setPassword] = useState<String>('Matthewfallon33!');
 
     const [usernameErrors, setUsernameErrors] = useState([]);
     const [passwordErrors, setPasswordErrors] = useState([]);
@@ -53,8 +56,6 @@ const Login = () => {
 
                 dispatch(setUser(data))
 
-                navigation.navigate('AllRecipes');
-
                 return Toast.show({
                     type: 'success',
                     text1: 'Logged in successfully!'
@@ -62,6 +63,8 @@ const Login = () => {
 
             })
             .catch((err: any) => {
+
+                console.log(JSON.stringify(err))
 
                 Toast.show({
                     type: 'error',

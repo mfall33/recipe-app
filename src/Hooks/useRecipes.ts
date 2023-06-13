@@ -72,18 +72,31 @@ const useRecipes = () => {
         }
     }
 
-    const deleteRecipe = async () => {
+    const deleteRecipe = async (cb: Function) => {
         try {
-            await dispatch(removeRecipe(recipe)).unwrap()
-                .then(data => {
-                    navigation.navigate('AllRecipes');
+            await dispatch(removeRecipe(recipe))
+                .unwrap()
+                .then(async (data) => {
+
+                    await dispatch(getAllRecipes())
+
                     Toast.show({
                         type: 'success',
                         text1: 'Recipe Removed!'
                     })
+
+                    cb()
+
                 })
-                .catch(err => console.log("Something went wrong: " + JSON.stringify(err)))
-            dispatch(getAllRecipes());
+                .catch((err: any) => {
+
+                    Toast.show({
+                        type: 'error',
+                        text1: err.message
+                    })
+
+                })
+                ;
         } catch (err) {
             Toast.show({
                 type: 'error',

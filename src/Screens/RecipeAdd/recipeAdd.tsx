@@ -13,7 +13,7 @@ import Modal from "react-native-modal";
 import { TURQOISE_OP, WHITE } from "../../Constants/Colors";
 import { IMAGE_BASE_URL } from "../../../config";
 
-const RecipeAdd = () => {
+const RecipeAdd = ({ route }) => {
 
     const dispatch = useDispatch();
     const navigation = useNavigation();
@@ -37,6 +37,17 @@ const RecipeAdd = () => {
     useFocusEffect(
 
         useCallback(() => {
+
+            try {
+                const { name, duration } = route.params;
+
+                setName(name);
+                setDuration(duration);
+
+            } catch (err) {
+
+            }
+
             nameRef.current?.focus();
         }, [])
 

@@ -52,26 +52,22 @@ export const styles = StyleSheet.create({
         borderRadius: 10
     },
     imgBackground: {
-        height: 250,
+        height: 350,
         display: 'flex',
         justifyContent: 'flex-end'
     },
     imgBackgroundCont: {
         backgroundColor: BLACK_OP_LIGHT,
         padding: 10,
-        display: 'flex',
-        justifyContent: 'space-between',
-        flexWrap: 'wrap',
-        flexDirection: 'row',
-        alignItems: 'center'
-    },
-    whiteAndItalic: {
-        color: WHITE,
-        fontStyle: 'italic'
+        borderTopColor: WHITE,
+        borderTopWidth: 1
     },
     actionBtnCont: {
+        width: '100%',
         display: 'flex',
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'center',
+        flexWrap: 'wrap'
     },
     actionBtn: {
         borderWidth: 1,
