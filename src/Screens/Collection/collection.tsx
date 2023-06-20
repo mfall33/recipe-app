@@ -1,5 +1,5 @@
 
-import { FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Image, ScrollView, Text, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 
 import { Header, Card } from "../../Components";
@@ -8,7 +8,7 @@ import { styles } from "./styles";
 import { useDispatch } from 'react-redux';
 import { TURQOISE_OP } from '../../Constants/Colors';
 import { likeRecipe } from '../../Redux/Store/recipeStore';
-import { getCollections } from '../../Redux/Store/collectionStore';
+import { getCollections, removeRecipeFromCollection } from '../../Redux/Store/collectionStore';
 
 const Collection = () => {
 
@@ -22,7 +22,7 @@ const Collection = () => {
         <View style={styles.mainCont}>
 
             <Header
-                subTitle={collection.name}
+                subTitle={"Collection - " + collection.name}
                 backBtnPress={() => navigation.goBack()} />
 
             <ScrollView
@@ -44,6 +44,11 @@ const Collection = () => {
                                         bottomText={item.user.username}
                                         image={item.images[0]}
                                         createdAt={item.created_at}
+                                        onCollectionDeletePress={() => {
+                                            dispatch(removeRecipeFromCollection({ recipeId: item._id }))
+                                            .unwrap()
+                                            .then(data => dispatch(getCollections()))
+                                        }}
                                         onLikePress={() => {
                                             dispatch(likeRecipe(item))
                                                 .unwrap()

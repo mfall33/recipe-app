@@ -25,8 +25,8 @@ export const getCollections = createAsyncThunk(
 )
 
 export const addRecipeToCollection = createAsyncThunk(
-  'recipes/updateRecipe',
-  async ({ recipeId, collectionId }, { getState }) => {
+  'recipes/addRecipeToCollection',
+  async ({ recipeId, collectionId }) => {
 
     try {
 
@@ -63,23 +63,26 @@ export const addCollection = createAsyncThunk(
   }
 )
 
-// export const removeRecipe = createAsyncThunk(
-//   'recipes/removeRecipe',
-//   async (recipe, { rejectWithValue }) => {
-//     try {
+export const removeRecipeFromCollection = createAsyncThunk(
+  'recipes/removeRecipeFromCollection',
+  async ({ recipeId }, { getState }) => {
+    try {
 
-//       const response = await API.delete(`/recipes/${recipe._id}`);
-//       if (response.status !== 200) {
-//         return rejectWithValue(response.data);
-//       }
+      const collectionId = getState().collections.collection._id
 
-//       return response.data
+      const response = await API.delete(`/collections/${collectionId}/recipe/${recipeId}`);
+      
+      if (response.status !== 200) {
+        return rejectWithValue(response.data);
+      }
 
-//     } catch (err) {
-//       return error?.response?.data;
-//     }
-//   }
-// )
+      return response.data
+
+    } catch (err) {
+      return error?.response?.data;
+    }
+  }
+)
 
 export const collectionSlice = createSlice({
   name: 'recipes',

@@ -1,12 +1,12 @@
 import moment from 'moment';
 import { useCallback, useMemo, useRef, useState } from "react";
-import { Alert, Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { Alert, FlatList, Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import Modal from "react-native-modal";
 
-import { TextInput, Button, Header, ImageContainer, TitleMd, ParaSm } from "../../Components";
+import { TextInput, Button, Header, ImageContainer, TitleMd, ParaSm, ListItem } from "../../Components";
 import { useRecipes } from "../../Hooks";
 import { styles } from "./styles";
 import { RED_OP, TURQOISE, TURQOISE_OP, WHITE } from "../../Constants/Colors";
@@ -14,6 +14,7 @@ import { IMAGE_BASE_URL } from "../../../config";
 import { useDispatch, useSelector } from 'react-redux';
 import { likeRecipe } from '../../Redux/Store/recipeStore';
 import { selectEmail } from '../../Redux/Store/userStore';
+import { addRecipeToCollection, getCollections, selectCollections } from '../../Redux/Store/collectionStore';
 
 const Recipe = () => {
 
@@ -22,10 +23,11 @@ const Recipe = () => {
 
     const { recipe, deleteRecipe, editRecipe, deleteImage, addImage } = useRecipes();
 
+    const currentEmail = useSelector(selectEmail);
+    const collections = useSelector(selectCollections);
+
     const [modal, setModal] = useState(false);
     const [photo, setPhoto] = useState(true);
-
-    let currentEmail = useSelector(selectEmail);
 
     const [name, setName] = useState(recipe.name);
     const [duration, setDuration] = useState(recipe.duration);
@@ -33,6 +35,8 @@ const Recipe = () => {
 
     const [nameErrors, setNameErrors] = useState([]);
     const [durationErrors, setDurationErrors] = useState([]);
+
+    const [collectionModal, setCollectionModal] = useState(false);
 
     const nameRef = useRef(null);
     const durationRef = useRef(null);
@@ -167,6 +171,19 @@ const Recipe = () => {
         setModal(true)
     }
 
+    const toggleCollectionModal = () => {
+        if (collectionModal) {
+            setCollectionModal(false)
+            return;
+        }
+
+        dispatch(getCollections())
+            .unwrap()
+            .then(data => {
+                setCollectionModal(true);
+            })
+    }
+
     return (
         <View style={styles.mainCont}>
 
@@ -184,6 +201,45 @@ const Recipe = () => {
 
             <Header backBtnPress={() => navigation.goBack()} />
 
+            <Modal
+                isVisible={collectionModal}
+                onBackdropPress={() => setCollectionModal(false)}
+                animationInTiming={200}
+                animationOutTiming={200}
+            >
+                <View
+                    style={styles.collectionModalInner}>
+                    <View style={{ backgroundColor: TURQOISE_OP, padding: 10 }}>
+                        <TitleMd style={{ color: WHITE }}>Add to Collection</TitleMd>
+                    </View>
+                    <FlatList
+                        data={collections}
+                        renderItem={({ item }) => {
+
+                            return (
+                                <ListItem
+                                    title={item.name}
+                                    subTitleOne={item.recipes.length + " recipes"}
+                                    onPress={() => {
+                                        dispatch(addRecipeToCollection({ recipeId: recipe._id, collectionId: item._id }))
+                                            .unwrap()
+                                            .then(data => {
+                                                setCollectionModal(false);
+                                                Toast.show({
+                                                    type: 'success',
+                                                    text1: 'Recipe added to collection'
+                                                })
+                                                
+                                            })
+
+                                    }}
+                                />)
+                        }
+                        }
+                    />
+                </View>
+            </Modal>
+
             <ScrollView contentContainerStyle={styles.cont} showsVerticalScrollIndicator={false}>
 
                 <ImageBackground
@@ -198,6 +254,13 @@ const Recipe = () => {
                                 <TouchableOpacity
                                     style={[styles.actionBtn, { backgroundColor: TURQOISE_OP }]} onPress={() => dispatch(likeRecipe(recipe))}>
                                     <Image source={recipe.liked ? require('../../../assets/images/Icons/Heart-Full.png') : require('../../../assets/images/Icons/Heart-Empty.png')}
+                                        style={styles.actionBtnImg} />
+                                </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[styles.actionBtn, { backgroundColor: TURQOISE_OP }]} onPress={() => { 
+                                        toggleCollectionModal();
+                                    }}>
+                                    <Image source={require('../../../assets/images/Icons/Add-Collection.png')}
                                         style={styles.actionBtnImg} />
                                 </TouchableOpacity>
                                 <TouchableOpacity

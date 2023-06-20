@@ -8,6 +8,7 @@ type CardProps = {
     onDeletePress?: () => void;
     onAddPress?: () => void;
     onLikePress?: () => void;
+    onCollectionDeletePress?: () => void;
     title: string;
     image: string;
     subTitle: string;
@@ -26,7 +27,9 @@ const Card = ({
     onPress,
     onAddPress,
     onDeletePress,
-    onLikePress }: CardProps) => {
+    onLikePress,
+    onCollectionDeletePress
+}: CardProps) => {
 
     let source = require('../../../assets/images/cooking-stock.jpeg');
 
@@ -68,12 +71,19 @@ const Card = ({
                                 <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Add-Collection.png')} />
                             </TouchableOpacity>
                         }
+                        
+                        {onCollectionDeletePress &&
+                            <TouchableOpacity style={styles.deleteBtnCont} onPress={onCollectionDeletePress}>
+                                <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Delete-Collection.png')} />
+                            </TouchableOpacity>
+                        }
 
                         {onDeletePress &&
                             <TouchableOpacity style={styles.deleteBtnCont} onPress={onDeletePress}>
                                 <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Delete.png')} />
                             </TouchableOpacity>
                         }
+
 
                         {onLikePress &&
                             <TouchableOpacity style={styles.deleteBtnCont} onPress={onLikePress}>

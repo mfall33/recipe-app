@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
     cont: {
         position: 'absolute',
         zIndex: 999,
-        top: '75%',
+        top: '77%',
         right: 15,
         display: 'flex',
         flexDirection: 'row',
