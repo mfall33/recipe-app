@@ -8,10 +8,18 @@ type ButtonProps = {
     disabled?: Boolean
 }
 
-const Button = ({ onPress, text, style, disabled }: ButtonProps) => {
+
+
+const Button = ({ onPress, text, style, disabled = false }: ButtonProps) => {
+
+    const handlePress = () => {
+        if (!disabled) {
+            onPress();
+        }
+    };
 
     return (
-        <TouchableOpacity style={[styles.cont, style, { opacity: disabled ? 0.75 : 1 }]} onPress={onPress}>
+        <TouchableOpacity activeOpacity={disabled ? .99 : .2}  style={[styles.cont, style, { opacity: disabled ? 0.75 : 1 }]} onPress={handlePress}>
             <Text style={styles.text}>{text}</Text>
         </TouchableOpacity>
     )

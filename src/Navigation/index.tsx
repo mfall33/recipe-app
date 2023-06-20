@@ -17,6 +17,7 @@ import { ForgotPasswordScreen } from '../../src/Screens/ForgotPassword';
 import { ProfileScreen } from '../../src/Screens/Profile';
 import { SettingsScreen } from '../Screens/Settings';
 import { TURQOISE, TURQOISE_OP, WHITE } from '../Constants/Colors';
+import { CollectionScreen } from '../Screens/Collection';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -95,6 +96,7 @@ const AllRecipesTab = () => {
             <Stack.Screen name="Recipe" component={RecipeScreen} />
             <Stack.Screen name="RecipeAdd" component={RecipeAddScreen} />
             <Stack.Screen name="Collections" component={CollectionsScreen} />
+            <Stack.Screen name="Collection" component={CollectionScreen} />
         </Stack.Navigator>
     )
 

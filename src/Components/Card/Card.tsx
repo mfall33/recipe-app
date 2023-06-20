@@ -6,6 +6,7 @@ import { IMAGE_BASE_URL } from "../../../config";
 type CardProps = {
     onPress?: () => void;
     onDeletePress?: () => void;
+    onAddPress?: () => void;
     onLikePress?: () => void;
     title: string;
     image: string;
@@ -23,6 +24,7 @@ const Card = ({
     createdAt,
     liked = false,
     onPress,
+    onAddPress,
     onDeletePress,
     onLikePress }: CardProps) => {
 
@@ -56,18 +58,30 @@ const Card = ({
                 resizeMode={"cover"}
                 source={source}>
 
-                <View style={styles.innerCont}>
-                    {onDeletePress &&
-                        <TouchableOpacity style={styles.deleteBtnCont} onPress={onDeletePress}>
-                            <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Delete.png')} />
-                        </TouchableOpacity>
-                    }
 
-                    {onLikePress &&
-                        <TouchableOpacity style={styles.deleteBtnCont} onPress={onLikePress}>
-                            <Image style={styles.deleteBtnIcon} source={liked ? require('../../../assets/images/Icons/Heart-Full.png') : require('../../../assets/images/Icons/Heart-Empty.png')} />
-                        </TouchableOpacity>
-                    }
+                <View style={styles.innerCont}>
+
+                    <View style={styles.iconCont}>
+
+                        {onAddPress &&
+                            <TouchableOpacity style={styles.deleteBtnCont} onPress={onAddPress}>
+                                <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Add-Collection.png')} />
+                            </TouchableOpacity>
+                        }
+
+                        {onDeletePress &&
+                            <TouchableOpacity style={styles.deleteBtnCont} onPress={onDeletePress}>
+                                <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Delete.png')} />
+                            </TouchableOpacity>
+                        }
+
+                        {onLikePress &&
+                            <TouchableOpacity style={styles.deleteBtnCont} onPress={onLikePress}>
+                                <Image style={styles.deleteBtnIcon} source={liked ? require('../../../assets/images/Icons/Heart-Full.png') : require('../../../assets/images/Icons/Heart-Empty.png')} />
+                            </TouchableOpacity>
+                        }
+                    </View>
+
 
                     <View style={styles.bottomCont}>
                         <Text style={styles.title}>{title}</Text>
@@ -93,6 +107,20 @@ const styles = StyleSheet.create({
         shadowOffset: { width: -2, height: 4 },
         shadowOpacity: 0.2,
         shadowRadius: 3,
+    },
+    iconCont: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        // backgroundColor: TURQOISE_OP,
+        paddingTop: 10,
+        width: '100%',
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 999
     },
     imgCont: {
         height: 250
@@ -132,8 +160,6 @@ const styles = StyleSheet.create({
         color: WHITE
     },
     deleteBtnCont: {
-        top: 10,
-        right: 10,
         width: 30,
         height: 30,
         padding: 5,
@@ -141,7 +167,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: WHITE,
         borderWidth: 1,
-        position: 'absolute'
+        marginRight: 5
     },
     deleteBtnIcon: {
         tintColor: WHITE,

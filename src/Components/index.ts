@@ -14,6 +14,7 @@ export { default as ParaSm } from './Para/small';
 
 export { default as PlusBtn } from './Button/Plus';
 export { default as ListButton } from './ListButton/ListButton';
+export { default as ListItem } from './ListItem/ListItem';
 export { default as Button } from './Button/Button';
 
 export { default as Card } from './Card/Card';

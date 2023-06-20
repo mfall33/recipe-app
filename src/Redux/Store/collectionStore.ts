@@ -7,7 +7,7 @@ interface CollectionState {
   status: string
 }
 
-const initialState: CollectionStateState = {
+const initialState: CollectionState = {
   collection: {},
   collections: [],
   status: 'idle',
@@ -24,40 +24,44 @@ export const getCollections = createAsyncThunk(
   }
 )
 
-// export const updateRecipe = createAsyncThunk(
-//   'recipes/updateRecipe',
-//   async (params, { getState }) => {
+export const addRecipeToCollection = createAsyncThunk(
+  'recipes/updateRecipe',
+  async ({ recipeId, collectionId }, { getState }) => {
 
-//     const recipe = getState().recipes.recipe;
+    try {
 
-//     try {
+      const response = await API.put(`/collections/${collectionId}`, { recipe: recipeId });
 
-//       const response = await API.put(`/recipes/${recipe._id}`, params);
+      return response.data;
 
-//       return response.data;
+    } catch (error) {
+      return error?.response?.data;
+    }
 
-//     } catch (error) {
-//       return error?.response?.data;
-//     }
+  }
+)
 
-//   }
-// )
+export const addCollection = createAsyncThunk(
+  'collections/addCollection',
+  async (collection, { rejectWithValue }) => {
 
-// export const addRecipe = createAsyncThunk(
-//   'recipes/addRecipe',
-//   async recipe => {
+    try {
 
-//     try {
+      const response = await API.post('/collections', { name: collection });
 
-//       const response = await API.post('/recipes', recipe);
+      if (response.status > 200) {
+        return rejectWithValue(response.data)
+      }
 
-//       return response.data;
+      return response.data;
 
-//     } catch (error) {
-//       throw error?.response?.data;
-//     }
-//   }
-// )
+    } catch (error) {
+
+      throw error?.response?.data;
+
+    }
+  }
+)
 
 // export const removeRecipe = createAsyncThunk(
 //   'recipes/removeRecipe',
@@ -81,6 +85,9 @@ export const collectionSlice = createSlice({
   name: 'recipes',
   initialState,
   reducers: {
+    setCollection: (state, action) => {
+      state.collection = state.collections.find(collection => collection._id === action.payload);
+    },
   },
   extraReducers(builder) {
     builder
@@ -89,6 +96,12 @@ export const collectionSlice = createSlice({
       })
       .addCase(getCollections.fulfilled, (state, action) => {
         state.collections = action.payload;
+
+        if (state.collection._id) {
+
+          state.collection = action.payload.find(collection => collection._id === state.collection._id);
+
+        }
       })
   }
 })
@@ -96,6 +109,6 @@ export const collectionSlice = createSlice({
 export const selectCollections = (state: CollectionState) => state.collections.collections;
 export const selectCollectionStatus = (state: CollectionState) => state.collections.status;
 
-export const { } = collectionSlice.actions
+export const { setCollection } = collectionSlice.actions
 
 export default collectionSlice.reducer

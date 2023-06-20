@@ -1,5 +1,5 @@
 import { StyleSheet } from "react-native";
-import { TURQOISE, WHITE } from "../../Constants/Colors";
+import { WHITE } from "../../Constants/Colors";
 
 export const styles = StyleSheet.create({
     cont: {
@@ -17,5 +17,14 @@ export const styles = StyleSheet.create({
         left: 0,
         right: 0,
         transform: [{ scaleX: 2 }, { scaleY: 2 }]
+    },
+    modalInner: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: WHITE,
+        borderRadius: 15,
+        padding: 20
     },
 });

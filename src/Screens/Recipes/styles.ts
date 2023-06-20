@@ -27,5 +27,15 @@ export const styles = StyleSheet.create({
     errText: {
         color: 'red',
         fontWeight: "bold"
+    },
+    collectionModalInner: {
+        backgroundColor: WHITE,
+        width: '100%',
+        borderRadius: 10,
+        position: 'absolute',
+        top: '20%',
+        bottom: '20%',
+        height: '60%',
+        marginVertical: 'auto'
     }
 });
