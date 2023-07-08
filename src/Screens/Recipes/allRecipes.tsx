@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { ScrollView, RefreshControl, Text, View, FlatList, Image } from "react-native";
+import { ScrollView, RefreshControl, Text, View, FlatList, Image, Keyboard } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Modal from 'react-native-modal';
@@ -7,7 +7,7 @@ import Modal from 'react-native-modal';
 import { styles } from "./styles";
 import { useRecipes } from "../../Hooks";
 import { TURQOISE, TURQOISE_OP, WHITE } from "../../Constants/Colors";
-import { Card, PlusBtn, Header, ListItem, TitleSm, TitleMd } from "../../Components";
+import { Card, PlusBtn, Header, ListItem, TitleMd } from "../../Components";
 import {
     getAllRecipes,
     selectAllRecipes,
@@ -39,7 +39,7 @@ const Recipes = () => {
         if (recipesStatus === 'idle') {
             dispatch(getAllRecipes(search));
         }
-    }, [recipesStatus, dispatch])
+    }, [refreshing, recipesStatus])
 
     useFocusEffect(
         useCallback(() => {
@@ -73,8 +73,15 @@ const Recipes = () => {
             <Header
                 search={search}
                 onChange={(e) => setSearch(e)}
-                onSubmit={() => { dispatch(getAllRecipes(search)); }}
-                onCancel={() => { setSearch('') }} />
+                onSubmit={() => {
+                    dispatch(getAllRecipes(search));
+                    Keyboard.dismiss();
+                }}
+                onCancel={() => {
+                    setSearch('');
+                    dispatch(getAllRecipes());
+                    Keyboard.dismiss();
+                }} />
 
 
             <Modal

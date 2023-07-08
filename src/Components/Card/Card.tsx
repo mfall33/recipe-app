@@ -10,11 +10,11 @@ type CardProps = {
     onLikePress?: () => void;
     onCollectionDeletePress?: () => void;
     title: string;
-    image: string;
+    image?: string;
     subTitle: string;
     createdAt: any;
     liked: boolean
-    bottomText: string;
+    bottomText?: string;
 }
 
 const Card = ({
@@ -34,7 +34,7 @@ const Card = ({
     let source = require('../../../assets/images/cooking-stock.jpeg');
 
     if (image) {
-        source = { uri: `${IMAGE_BASE_URL}${image}` }
+        source = { uri: `${IMAGE_BASE_URL}${image}` };
     }
 
     const duration = moment.duration(moment().diff(createdAt));
@@ -61,7 +61,6 @@ const Card = ({
                 resizeMode={"cover"}
                 source={source}>
 
-
                 <View style={styles.innerCont}>
 
                     <View style={styles.iconCont}>
@@ -71,7 +70,7 @@ const Card = ({
                                 <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Add-Collection.png')} />
                             </TouchableOpacity>
                         }
-                        
+
                         {onCollectionDeletePress &&
                             <TouchableOpacity style={styles.deleteBtnCont} onPress={onCollectionDeletePress}>
                                 <Image style={styles.deleteBtnIcon} source={require('../../../assets/images/Icons/Delete-Collection.png')} />
@@ -96,7 +95,9 @@ const Card = ({
                     <View style={styles.bottomCont}>
                         <Text style={styles.title}>{title}</Text>
                         <Text style={styles.subTitle}>{subTitle}</Text>
-                        <Text style={styles.bottomText}>Made by: <Text style={{ fontStyle: 'italic', fontWeight: '600' }}>{bottomText}</Text></Text>
+                        {bottomText &&
+                            <Text style={styles.bottomText}>Made by: <Text style={{ fontStyle: 'italic', fontWeight: '600' }}>{bottomText}</Text></Text>
+                        }
                         <Text style={styles.bottomText}>{timeAgo()}</Text>
                     </View>
                 </View>

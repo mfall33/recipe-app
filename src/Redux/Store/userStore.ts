@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import API from '../../API';
+import { AuthedAPI } from '../../API';
 
 interface UserState {
   email: string | null,
@@ -15,7 +15,7 @@ export const updateUsername = createAsyncThunk('users/updateUsername', async use
 
   try {
 
-    const response = await API.patch(`/user`, { username });
+    const response = await AuthedAPI.patch(`/user`, { username });
 
     return response.data
 

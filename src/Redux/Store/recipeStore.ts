@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import API from '../../API';
+import { AuthedAPI } from '../../API';
 
 interface RecipeState {
   recipe: object,
@@ -27,7 +27,7 @@ export const getAllRecipes = createAsyncThunk(
       url += `?name=${search}`
     }
 
-    const response = await API.get(url, { validateStatus: () => true });
+    const response = await AuthedAPI.get(url, { validateStatus: () => true });
 
     return response;
 
@@ -46,7 +46,7 @@ export const getMyRecipes = createAsyncThunk(
       url += `?name=${search}`
     }
 
-    const response = await API.get(url, { validateStatus: () => true });
+    const response = await AuthedAPI.get(url, { validateStatus: () => true });
 
     return response;
 
@@ -61,7 +61,7 @@ export const updateRecipe = createAsyncThunk(
 
     try {
 
-      const response = await API.put(`/recipes/${recipe._id}`, params);
+      const response = await AuthedAPI.put(`/recipes/${recipe._id}`, params);
 
       return response.data;
 
@@ -78,7 +78,7 @@ export const addRecipe = createAsyncThunk(
 
     try {
 
-      const response = await API.post('/recipes', recipe);
+      const response = await AuthedAPI.post('/recipes', recipe);
 
       return response.data;
 
@@ -96,7 +96,7 @@ export const removeRecipeImage = createAsyncThunk(
 
     try {
 
-      const response = await API.delete(`/recipes/${recipe._id}/image`, {
+      const response = await AuthedAPI.delete(`/recipes/${recipe._id}/image`, {
         data: {
           image: image
         }
@@ -118,7 +118,7 @@ export const addRecipeImages = createAsyncThunk(
 
     try {
 
-      const response = await API.post(`/recipes/${recipe._id}/image`, data);
+      const response = await AuthedAPI.post(`/recipes/${recipe._id}/image`, data);
 
       return response.data;
 
@@ -134,7 +134,7 @@ export const removeRecipe = createAsyncThunk(
   async (recipe, { rejectWithValue }) => {
     try {
 
-      const response = await API.delete(`/recipes/${recipe._id}`);
+      const response = await AuthedAPI.delete(`/recipes/${recipe._id}`);
       if (response.status !== 200) {
         return rejectWithValue(response.data);
       }
@@ -151,7 +151,7 @@ export const likeRecipe = createAsyncThunk(
   'recipes/likeRecipe',
   async (recipe) => {
 
-    const response = await API.put(`/recipes/${recipe._id}/like`);
+    const response = await AuthedAPI.put(`/recipes/${recipe._id}/like`);
 
     return response.data
   }

@@ -1,4 +1,4 @@
-import { Image, StyleSheet } from 'react-native';
+import { Image, StyleSheet, View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -48,40 +48,40 @@ const MainNavigator = () => {
     }
 
     return (
-        <Tab.Navigator
-            initialRouteName="AllRecipes"
-            screenOptions={{ headerShown: false }}>
-            <Tab.Screen
-                name="AllRecipes"
-                component={AllRecipesTab}
-                options={{
-                    ...tabBarOptions,
-                    tabBarLabel: 'Recipes',
-                    tabBarIcon: ({ focused }) => (
-                        <Image
-                            style={[styles.tabBarIconStyle, { tintColor: focused ? WHITE : TURQOISE }]}
-                            source={require('../../assets/images/Icons/Recipe-Book.png')}
-                        />
-                    )
-                }}
-            />
-            <Tab.Screen
-                name="Profile"
-                component={ProfileTab}
-                options={{
-                    ...tabBarOptions,
-                    tabBarLabel: 'Profile',
-                    tabBarIcon: ({ focused }) => {
-                        return (
+            <Tab.Navigator
+                initialRouteName="AllRecipes"
+                screenOptions={{ headerShown: false, tabBarStyle: { height: 60 } }}>
+                <Tab.Screen
+                    name="AllRecipes"
+                    component={AllRecipesTab}
+                    options={{
+                        ...tabBarOptions,
+                        tabBarLabel: 'Recipes',
+                        tabBarIcon: ({ focused }) => (
                             <Image
                                 style={[styles.tabBarIconStyle, { tintColor: focused ? WHITE : TURQOISE }]}
-                                source={require('../../assets/images/Icons/User.png')}
+                                source={require('../../assets/images/Icons/Recipe-Book.png')}
                             />
                         )
-                    }
-                }}
-            />
-        </Tab.Navigator>
+                    }}
+                />
+                <Tab.Screen
+                    name="Profile"
+                    component={ProfileTab}
+                    options={{
+                        ...tabBarOptions,
+                        tabBarLabel: 'Profile',
+                        tabBarIcon: ({ focused }) => {
+                            return (
+                                <Image
+                                    style={[styles.tabBarIconStyle, { tintColor: focused ? WHITE : TURQOISE }]}
+                                    source={require('../../assets/images/Icons/User.png')}
+                                />
+                            )
+                        }
+                    }}
+                />
+            </Tab.Navigator>
     );
 
 }
@@ -129,10 +129,10 @@ export default RootNav;
 const styles = StyleSheet.create({
     tabBarItemStyle: {
         borderTopWidth: 2,
-        borderTopColor: WHITE
+        borderTopColor: WHITE,
     },
     tabBarLabelStyle: {
-        fontSize: 12, fontWeight: '500'
+        fontSize: 15, fontWeight: '500', marginTop: 0, transform: [{translateY: -3}],
     },
     tabBarIconStyle: {
         width: 25, height: 25,

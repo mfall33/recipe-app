@@ -48,7 +48,6 @@ const RecipeAdd = ({ route }) => {
 
             }
 
-            nameRef.current?.focus();
         }, [])
 
     );

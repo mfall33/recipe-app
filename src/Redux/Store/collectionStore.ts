@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import API from '../../API';
+import { AuthedAPI } from '../../API';
 
 interface CollectionState {
   collection: object,
@@ -17,7 +17,7 @@ export const getCollections = createAsyncThunk(
   'collections/getCollections',
   async () => {
 
-    const response = await API.get('/collections');
+    const response = await AuthedAPI.get('/collections');
 
     return response.data;
 
@@ -30,7 +30,7 @@ export const addRecipeToCollection = createAsyncThunk(
 
     try {
 
-      const response = await API.put(`/collections/${collectionId}`, { recipe: recipeId });
+      const response = await AuthedAPI.put(`/collections/${collectionId}`, { recipe: recipeId });
 
       return response.data;
 
@@ -47,7 +47,7 @@ export const addCollection = createAsyncThunk(
 
     try {
 
-      const response = await API.post('/collections', { name: collection });
+      const response = await AuthedAPI.post('/collections', { name: collection });
 
       if (response.status > 200) {
         return rejectWithValue(response.data)
@@ -70,8 +70,8 @@ export const removeRecipeFromCollection = createAsyncThunk(
 
       const collectionId = getState().collections.collection._id
 
-      const response = await API.delete(`/collections/${collectionId}/recipe/${recipeId}`);
-      
+      const response = await AuthedAPI.delete(`/collections/${collectionId}/recipe/${recipeId}`);
+
       if (response.status !== 200) {
         return rejectWithValue(response.data);
       }

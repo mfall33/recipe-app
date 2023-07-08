@@ -4,15 +4,18 @@ import { store } from '../Redux/Store';
 import { logout, refreshTokens } from '../Redux/Store/authStore';
 
 // NEED TO CREATE AUTH INSTANCE AND UNAUTHD INSTANCES
-const instance = axios.create({
+const AuthedAPI = axios.create({
     baseURL: BASE_URL,
     validateStatus: () => true
 });
 
-instance.interceptors.request.use(
-    (config) => {
+const UnAuthedAPI = axios.create({
+    baseURL: BASE_URL,
+    validateStatus: () => true
+});
 
-        console.log("CONFIG: " + JSON.stringify(config));
+AuthedAPI.interceptors.request.use(
+    (config) => {
 
         const { auth } = store.getState();
         const { accessToken } = auth;
@@ -28,7 +31,7 @@ instance.interceptors.request.use(
     }
 );
 
-instance.interceptors.response.use(
+AuthedAPI.interceptors.response.use(
     async (res) => {
 
         const originalConfig = res.config;
@@ -76,4 +79,7 @@ instance.interceptors.response.use(
 
 )
 
-export default instance;
+export {
+    AuthedAPI,
+    UnAuthedAPI
+}

@@ -1,12 +1,12 @@
 import moment from 'moment';
-import { useCallback, useMemo, useRef, useState } from "react";
-import { Alert, FlatList, Image, ImageBackground, ScrollView, Text, TouchableOpacity, View } from "react-native";
-import { useFocusEffect, useNavigation } from "@react-navigation/native";
+import { useMemo, useRef, useState } from "react";
+import { Alert, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import Modal from "react-native-modal";
 
-import { TextInput, Button, Header, ImageContainer, TitleMd, ParaSm, ListItem } from "../../Components";
+import { TextInput, Button, Header, ImageContainer, TitleMd, ParaSm, ListItem, ImageBackground } from "../../Components";
 import { useRecipes } from "../../Hooks";
 import { styles } from "./styles";
 import { RED_OP, TURQOISE, TURQOISE_OP, WHITE } from "../../Constants/Colors";
@@ -62,23 +62,17 @@ const Recipe = () => {
     }, [recipe])
 
     const mainImg = useMemo(() => {
-
+        
         let image = require('../../../assets/images/cooking-stock.jpeg');
 
         if (recipe?.images.length > 0) {
             image = { uri: `${IMAGE_BASE_URL}${recipe.images[0]}` }
+            console.log("Image: " + JSON.stringify(image))
         }
 
         return image;
 
-    }, [recipe.images])
-
-    useFocusEffect(
-
-        useCallback(() => {
-            nameRef.current?.focus();
-        }, [])
-    );
+    }, [recipe])
 
     const clearErrors = () => {
         setNameErrors([]);

@@ -1,5 +1,5 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
-import { ScrollView, RefreshControl, Text, View, Alert, FlatList, Image } from "react-native";
+import { ScrollView, RefreshControl, Text, View, Alert, FlatList, Image, Keyboard } from "react-native";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Toast from "react-native-toast-message";
@@ -83,8 +83,15 @@ const Recipes = () => {
                 subTitle="My Recipes"
                 search={search}
                 onChange={(e) => setSearch(e)}
-                onSubmit={() => { dispatch(getMyRecipes(search)); }}
-                onCancel={() => { setSearch('') }} />
+                onSubmit={() => {
+                    dispatch(getMyRecipes(search));
+                    Keyboard.dismiss()
+                }}
+                onCancel={() => {
+                    setSearch('')
+                    dispatch(getMyRecipes());
+                    Keyboard.dismiss();
+                }} />
 
             <ScrollView
                 showsVerticalScrollIndicator={false}

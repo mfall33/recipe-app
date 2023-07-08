@@ -1,4 +1,5 @@
-import { ScrollView, StyleSheet, TouchableOpacity, Image, Text } from 'react-native';
+import { ScrollView, StyleSheet, TouchableOpacity, Text } from 'react-native';
+import { Image } from '..';
 import { TURQOISE, WHITE } from '../../Constants/Colors';
 
 type ImageContainerProps = {

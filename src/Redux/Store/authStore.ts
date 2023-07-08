@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { BASE_URL } from '../../../config';
-import API from '../../API';
+import { UnAuthedAPI } from '../../API';
 
 interface AuthState {
   loggedIn: boolean,
@@ -21,7 +21,7 @@ export const signup = createAsyncThunk(
 
     try {
 
-      const response = await API.post(`/auth/signup`, user)
+      const response = await UnAuthedAPI.post(`/auth/signup`, user);
 
       return response.data;
 
@@ -41,11 +41,17 @@ export const signin = createAsyncThunk(
       this but the response interceptor will set the
       access token behind the scenes
       */
-      const response = await API.post(`/auth/signin`, user);
+      const response = await UnAuthedAPI.post(`/auth/signin`, user);
+
+      alert("RESPONSE: " + response.data)
 
       return response.data;
 
     } catch (error) {
+      alert("ERROR: " + JSON.stringify(error.message))
+      alert("ERROR: " + JSON.stringify(Object.keys(error)))
+      alert("ERROR: " + JSON.stringify(error.request))
+      
       throw error?.response?.data;
     }
   }
@@ -59,7 +65,7 @@ export const refreshTokens = createAsyncThunk(
 
     try {
       // using normal axios instance as we don't need the access token for this request
-      const response = await axios.post(
+      const response = await UnAuthedAPI.post(
         `${BASE_URL}/auth/refreshtoken`,
         { refreshToken: refreshToken })
 
@@ -80,7 +86,7 @@ export const authSlice = createSlice({
       state.loggedIn = false;
       state.accessToken = '';
       state.refreshToken = '';
-      
+
     },
   },
   extraReducers(builder) {
