@@ -3,6 +3,7 @@ import { TURQOISE, YELLOW, RED } from "../../Constants/Colors";
 import { useState } from 'react';
 
 type TextInputProps = {
+    containerStyle: Object,
     value?: string;
     label?: string;
     onChangeText?: (value: string) => void;
@@ -15,12 +16,12 @@ type TextInputProps = {
     labelTextStyle?: Object
 }
 
-const TextInput = ({ onChangeText, inputRef, value, errors, placeholder, label, labelTextStyle, onSubmitEditing, blurOnSubmit, required, ...props }: TextInputProps) => {
+const TextInput = ({ containerStyle, onChangeText, inputRef, value, errors, placeholder, label, labelTextStyle, onSubmitEditing, blurOnSubmit, required, ...props }: TextInputProps) => {
 
     const [focused, setFocus] = useState(false);
 
     return (
-        <KeyboardAvoidingView style={styles.cont}>
+        <KeyboardAvoidingView style={[styles.cont, containerStyle]}>
             <View style={styles.labelCont}>
                 <Text style={[styles.label, labelTextStyle, { fontWeight: focused ? '700' : '500' }]}>{label}{required && ' *'}</Text>
             </View>

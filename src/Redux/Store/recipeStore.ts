@@ -80,6 +80,8 @@ export const addRecipe = createAsyncThunk(
 
       const response = await AuthedAPI.post('/recipes', recipe);
 
+      alert("RES: " + JSON.stringify(response.data))
+
       return response.data;
 
     } catch (error) {
