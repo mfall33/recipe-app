@@ -62,12 +62,11 @@ const Recipe = () => {
     }, [recipe])
 
     const mainImg = useMemo(() => {
-        
+
         let image = require('../../../assets/images/cooking-stock.jpeg');
 
         if (recipe?.images.length > 0) {
             image = { uri: `${IMAGE_BASE_URL}${recipe.images[0]}` }
-            console.log("Image: " + JSON.stringify(image))
         }
 
         return image;
@@ -223,7 +222,7 @@ const Recipe = () => {
                                                     type: 'success',
                                                     text1: 'Recipe added to collection'
                                                 })
-                                                
+
                                             })
 
                                     }}
@@ -251,7 +250,7 @@ const Recipe = () => {
                                         style={styles.actionBtnImg} />
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={[styles.actionBtn, { backgroundColor: TURQOISE_OP }]} onPress={() => { 
+                                    style={[styles.actionBtn, { backgroundColor: TURQOISE_OP }]} onPress={() => {
                                         toggleCollectionModal();
                                     }}>
                                     <Image source={require('../../../assets/images/Icons/Add-Collection.png')}
@@ -269,23 +268,25 @@ const Recipe = () => {
                                     <Image source={require('../../../assets/images/Icons/Copy.png')}
                                         style={styles.actionBtnImg} />
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.actionBtn, { backgroundColor: RED_OP }]}
-                                    onPress={
-                                        () => Alert.alert(`Remove Recipe`, `Are you sure you want to remove '${recipe.name}'?`, [
-                                            { text: 'No', },
-                                            {
-                                                text: 'Yes',
-                                                onPress: () => {
-                                                    deleteRecipe(() => {
-                                                        navigation.goBack();
-                                                    })
-                                                }
-                                            }])
-                                    } >
-                                    <Image
-                                        source={require('../../../assets/images/Icons/Delete.png')}
-                                        style={styles.actionBtnImg} />
-                                </TouchableOpacity>
+                                {madeByCurrentUser &&
+                                    <TouchableOpacity style={[styles.actionBtn, { backgroundColor: RED_OP }]}
+                                        onPress={
+                                            () => Alert.alert(`Remove Recipe`, `Are you sure you want to remove '${recipe.name}'?`, [
+                                                { text: 'No', },
+                                                {
+                                                    text: 'Yes',
+                                                    onPress: () => {
+                                                        deleteRecipe(() => {
+                                                            navigation.goBack();
+                                                        })
+                                                    }
+                                                }])
+                                        } >
+                                        <Image
+                                            source={require('../../../assets/images/Icons/Delete.png')}
+                                            style={styles.actionBtnImg} />
+                                    </TouchableOpacity>
+                                }
                             </View>
                         </View>
                     </View>

@@ -1,6 +1,7 @@
 import moment from 'moment';
-import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { WHITE, TURQOISE, TURQOISE_OP, BLACK_OP_LIGHT } from "../../Constants/Colors";
+import { Image, ImageBackground } from '..';
 import { IMAGE_BASE_URL } from "../../../config";
 
 type CardProps = {
