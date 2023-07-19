@@ -6,7 +6,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import Modal from "react-native-modal";
 
-import { TextInput, Button, Header, ImageContainer, TitleMd, ParaSm, ListItem, ImageBackground, IngredientItem } from "../../Components";
+import { TextInput, Button, Header, ImageContainer, TitleMd, ParaSm, ListItem, ImageBackground, IngredientItem, Pills } from "../../Components";
 import { useRecipes } from "../../Hooks";
 import { styles } from "./styles";
 import { RED_OP, TURQOISE, TURQOISE_OP, WHITE } from "../../Constants/Colors";
@@ -243,7 +243,10 @@ const Recipe = () => {
                 </View>
             </Modal>
 
-            <ScrollView contentContainerStyle={styles.cont} showsVerticalScrollIndicator={false}>
+            <ScrollView
+                bounces={false}
+                contentContainerStyle={styles.cont}
+                showsVerticalScrollIndicator={false}>
 
                 <ImageBackground
                     style={styles.imgBackground}
@@ -368,7 +371,7 @@ const Recipe = () => {
 
                     <View style={{ marginTop: 15 }}>
                         {
-                            !!ingredients && ingredients.map((ing, index) => {
+                            ingredients.map((ing, index) => {
                                 return (
                                     <IngredientItem
                                         enableDelete={madeByCurrentUser}
@@ -383,6 +386,29 @@ const Recipe = () => {
                         }
                     </View>
 
+                </View>
+
+                <View style={styles.pad}>
+                    <Pills
+                        containerStyle={{ marginTop: -10}}
+                        required={true}
+                        onPress={(pill) => { alert(pill._id) }}
+                        label="Categories"
+                        pills={[
+                            { _id: 1, name: 'Appetisers', selected: true },
+                            { _id: 2, name: 'Asian', selected: false },
+                            { _id: 3, name: 'Baked Goods', selected: false },
+                            { _id: 4, name: 'Drinks', selected: true },
+                            { _id: 5, name: 'Healthy', selected: false },
+                            { _id: 6, name: 'Meat', selected: true },
+                            { _id: 7, name: 'Mexican', selected: true },
+                            { _id: 8, name: 'Seafood', selected: true },
+                            { _id: 9, name: 'Snacks', selected: true },
+                            { _id: 10, name: 'Smoothies', selected: false },
+                            { _id: 11, name: 'Side dishes', selected: false },
+                        ]}
+                        pillKey={"name"}
+                    />
                 </View>
 
                 <View style={styles.pad}>

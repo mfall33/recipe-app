@@ -39,7 +39,7 @@ const RecipeAdd = ({ route }) => {
         useCallback(() => {
 
             try {
-                
+
                 const { name, duration } = route.params;
 
                 setName(name);
@@ -282,7 +282,6 @@ const RecipeAdd = ({ route }) => {
                         onChangeText={(text) => setDuration(text)}
                     />
 
-
                     <TextInput
                         label={"Ingredients"}
                         editable={false}
@@ -293,20 +292,25 @@ const RecipeAdd = ({ route }) => {
                             })
                         }}
                     />
+                    {!!ingredients.length &&
+                        <View style={{ marginTop: 15 }}>
+                            {
+                                ingredients.map((ing, index) => {
+                                    return (<IngredientItem text={`${ing.name} - ${ing.amount} ${ing.unit}`} onDeletePress={() => {
+                                        setIngredients(prevIngredients => {
+                                            return prevIngredients.filter((item, i) => i !== index);
+                                        })
+                                    }} />);
+                                })
+                            }
+                        </View>
+                    }
 
-                    <View style={{ marginTop: 15 }}>
-                        {
-                            ingredients.map((ing, index) => {
-                                return (<IngredientItem text={`${ing.name} - ${ing.amount} ${ing.unit}`} onDeletePress={() => {
-                                    setIngredients(prevIngredients => {
-                                        return prevIngredients.filter((item, i) => i !== index);
-                                    })
-                                }} />);
-                            })
-                        }
-                    </View>
 
+              
                 </View>
+
+
 
             </ScrollView>
 

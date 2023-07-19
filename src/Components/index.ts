@@ -25,3 +25,4 @@ export { default as Image } from './Image/Image';
 export { default as ImageBackground } from './ImageBackground/ImageBackground';
 
 export { default as IngredientItem } from './IngredientItem/IngredientItem';
+export { default as Pills } from './Pills/Pills';
