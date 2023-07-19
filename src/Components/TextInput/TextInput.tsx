@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     err: {
         marginTop: 5,
         color: RED,
-        fontWeight: '500'
+        fontWeight: '500',
     }
 })
 

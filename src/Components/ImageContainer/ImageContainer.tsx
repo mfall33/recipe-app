@@ -19,7 +19,6 @@ const ImageContainer = ({ images, onPress, onDeletePress, imgUrlPrefix, contStyl
 
     return (
 
-
         <ScrollView
             bounces={false}
             horizontal={true}

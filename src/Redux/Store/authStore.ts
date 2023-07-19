@@ -43,14 +43,9 @@ export const signin = createAsyncThunk(
       */
       const response = await UnAuthedAPI.post(`/auth/signin`, user);
 
-      alert("RESPONSE: " + response.data)
-
       return response.data;
 
     } catch (error) {
-      alert("ERROR: " + JSON.stringify(error.message))
-      alert("ERROR: " + JSON.stringify(Object.keys(error)))
-      alert("ERROR: " + JSON.stringify(error.request))
       
       throw error?.response?.data;
     }

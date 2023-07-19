@@ -1,22 +1,23 @@
 import moment from 'moment';
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Alert, FlatList, Image, ScrollView, Text, TouchableOpacity, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { launchImageLibrary } from 'react-native-image-picker';
 import Toast from 'react-native-toast-message';
 import Modal from "react-native-modal";
 
-import { TextInput, Button, Header, ImageContainer, TitleMd, ParaSm, ListItem, ImageBackground } from "../../Components";
+import { TextInput, Button, Header, ImageContainer, TitleMd, ParaSm, ListItem, ImageBackground, IngredientItem } from "../../Components";
 import { useRecipes } from "../../Hooks";
 import { styles } from "./styles";
 import { RED_OP, TURQOISE, TURQOISE_OP, WHITE } from "../../Constants/Colors";
 import { IMAGE_BASE_URL } from "../../../config";
 import { useDispatch, useSelector } from 'react-redux';
-import { likeRecipe } from '../../Redux/Store/recipeStore';
+import { likeRecipe, updateRecipeIngredients } from '../../Redux/Store/recipeStore';
 import { selectEmail } from '../../Redux/Store/userStore';
 import { addRecipeToCollection, getCollections, selectCollections } from '../../Redux/Store/collectionStore';
 
 const Recipe = () => {
+    // can probably add a made start boolean function in here
 
     const navigation = useNavigation();
     const dispatch = useDispatch();
@@ -25,12 +26,14 @@ const Recipe = () => {
 
     const currentEmail = useSelector(selectEmail);
     const collections = useSelector(selectCollections);
+    const ingredients = useSelector(state => state.recipes.recipe.ingredients);
 
     const [modal, setModal] = useState(false);
     const [photo, setPhoto] = useState(true);
 
     const [name, setName] = useState(recipe.name);
     const [duration, setDuration] = useState(recipe.duration);
+    const [newIngredients, setNewIngredients] = useState(recipe.ingredients);
     const [photos, setPhotos] = useState([]);
 
     const [nameErrors, setNameErrors] = useState([]);
@@ -41,6 +44,7 @@ const Recipe = () => {
     const nameRef = useRef(null);
     const durationRef = useRef(null);
 
+    // can probably make a utility of this...
     const timeAgo = useMemo(() => {
         const duration = moment.duration(moment().diff(recipe.created_at));
 
@@ -103,6 +107,12 @@ const Recipe = () => {
         })
 
     }
+
+    const addIngredientData = (ingredientData) => {
+
+        dispatch(updateRecipeIngredients({ ingredients: [...ingredients, ingredientData] }))
+
+    };
 
     const handleImageSelection = () => {
 
@@ -292,26 +302,26 @@ const Recipe = () => {
                     </View>
                 </ImageBackground>
 
-                {recipe.images?.length > 1 &&
-                    <View>
-                        <ImageContainer
-                            imgStyle={styles.topImg}
-                            images={recipe.images}
-                            imgUrlPrefix={IMAGE_BASE_URL}
-                            contStyle={styles.topImgContCont}
-                            onPress={(image) => { showModal(IMAGE_BASE_URL + image) }}
-                            onDeletePress={(image) =>
-                                Alert.alert(`Delete '${image}'`, `Are you sure you want to delete this image?`, [
-                                    { text: 'No', },
-                                    {
-                                        text: 'Yes',
-                                        onPress: () => {
-                                            deleteImage(image)
-                                        }
-                                    }])
-                            }
-                        />
-                    </View>}
+
+
+                <ImageContainer
+                    imgStyle={styles.topImg}
+                    images={recipe.images}
+                    imgUrlPrefix={IMAGE_BASE_URL}
+                    contStyle={styles.topImgContCont}
+                    onPress={(image) => { showModal(IMAGE_BASE_URL + image) }}
+                    onDeletePress={(image) =>
+                        Alert.alert(`Delete '${image}'`, `Are you sure you want to delete this image?`, [
+                            { text: 'No', },
+                            {
+                                text: 'Yes',
+                                onPress: () => {
+                                    deleteImage(image)
+                                }
+                            }])
+                    }
+                />
+
 
                 <View style={styles.pad}>
 
@@ -343,6 +353,35 @@ const Recipe = () => {
                             setDuration(text)
                         }}
                     />
+                    {madeByCurrentUser &&
+                        <TextInput
+                            label={"Ingredients"}
+                            editable={false}
+                            value={"Add Ingredient"}
+                            onPressIn={() => {
+                                navigation.navigate("IngredientAdd", {
+                                    addIngredientData: addIngredientData
+                                })
+                            }}
+                        />
+                    }
+
+                    <View style={{ marginTop: 15 }}>
+                        {
+                            !!ingredients && ingredients.map((ing, index) => {
+                                return (
+                                    <IngredientItem
+                                        enableDelete={madeByCurrentUser}
+                                        text={`${ing.name} - ${ing.amount} ${ing.unit}`}
+                                        onDeletePress={() => {
+
+                                            const tmpIngredients = ingredients.filter((item, i) => i !== index);
+                                            dispatch(updateRecipeIngredients({ ingredients: tmpIngredients }))
+
+                                        }} />);
+                            })
+                        }
+                    </View>
 
                 </View>
 

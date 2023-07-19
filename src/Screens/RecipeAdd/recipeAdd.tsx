@@ -1,16 +1,16 @@
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { launchImageLibrary } from 'react-native-image-picker';
 import { useCallback, useMemo, useRef, useState } from "react";
-import { ScrollView, View, Alert, TouchableOpacity, Image, ImageBackground, Text, Touchable } from "react-native";
+import { ScrollView, View, Alert, TouchableOpacity, Image, ImageBackground, Text } from "react-native";
 import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
 
-import { TextInput, Button, Header, ImageContainer, ParaSm, TitleMd } from "../../Components";
+import { TextInput, Button, Header, ImageContainer, ParaSm, TitleMd, IngredientItem } from "../../Components";
 import { useRecipes } from "../../Hooks";
 import { styles } from "./styles";
 import { addRecipe } from "../../Redux/Store/recipeStore";
 import Modal from "react-native-modal";
-import { TURQOISE, TURQOISE_OP, WHITE } from "../../Constants/Colors";
+import { TURQOISE_OP, WHITE } from "../../Constants/Colors";
 
 const RecipeAdd = ({ route }) => {
 
@@ -39,6 +39,7 @@ const RecipeAdd = ({ route }) => {
         useCallback(() => {
 
             try {
+                
                 const { name, duration } = route.params;
 
                 setName(name);
@@ -65,21 +66,6 @@ const RecipeAdd = ({ route }) => {
         return image;
 
     }, [photos]);
-
-    const clearErrors = () => {
-        setNameErrors([]);
-        setDurationErrors([]);
-    }
-
-    const clearFields = () => {
-        setName('')
-        setDuration('')
-    }
-
-    const showModal = (image) => {
-        setPhoto(image);
-        setModal(true)
-    }
 
     // determines if the user has made a start on making a new recipe
     const madeStart = useCallback((): boolean => {
@@ -122,6 +108,20 @@ const RecipeAdd = ({ route }) => {
             })
 
     }
+
+    const clearErrors = () => {
+        setNameErrors([]);
+        setDurationErrors([]);
+    }
+
+    const clearFields = () => {
+        setName('')
+        setDuration('')
+    }
+
+    const addIngredientData = (ingredientData) => {
+        setIngredients([...ingredients, ingredientData]);
+    };
 
     const handleImageSelection = () => {
 
@@ -178,9 +178,10 @@ const RecipeAdd = ({ route }) => {
 
     }
 
-    const handleIngredientData = (ingredientData) => {
-        setIngredients([...ingredients, ingredientData]);
-    };
+    const showModal = (image) => {
+        setPhoto(image);
+        setModal(true)
+    }
 
     return (
         <View style={{
@@ -288,7 +289,7 @@ const RecipeAdd = ({ route }) => {
                         value={"Add Ingredient"}
                         onPressIn={() => {
                             navigation.navigate("IngredientAdd", {
-                                handleIngredientData: handleIngredientData
+                                addIngredientData: addIngredientData
                             })
                         }}
                     />
@@ -296,20 +297,11 @@ const RecipeAdd = ({ route }) => {
                     <View style={{ marginTop: 15 }}>
                         {
                             ingredients.map((ing, index) => {
-                                return (<View style={{ backgroundColor: TURQOISE_OP, borderColor: TURQOISE_OP, borderWidth: 2, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 15, marginBottom: 10, display: 'flex', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                    <Text
-                                        style={{ color: WHITE, fontWeight: '600' }}>{ing.name} - {ing.amount} {ing.unit}</Text>
-                                    <TouchableOpacity
-                                        style={{ borderWidth: 1, borderColor: WHITE, borderRadius: 15, padding: 5 }}
-                                        onPress={() => {
-                                            setIngredients(prevIngredients => {
-                                                return prevIngredients.filter((item, i) => i !== index);
-                                            })
-                                        }}
-                                    >
-                                        <Image source={require('../../../assets/images/Icons/Close.png')} style={{ width: 15, height: 15, tintColor: WHITE }} />
-                                    </TouchableOpacity>
-                                </View>);
+                                return (<IngredientItem text={`${ing.name} - ${ing.amount} ${ing.unit}`} onDeletePress={() => {
+                                    setIngredients(prevIngredients => {
+                                        return prevIngredients.filter((item, i) => i !== index);
+                                    })
+                                }} />);
                             })
                         }
                     </View>

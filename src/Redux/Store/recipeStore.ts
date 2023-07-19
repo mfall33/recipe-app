@@ -72,6 +72,25 @@ export const updateRecipe = createAsyncThunk(
   }
 )
 
+export const updateRecipeIngredients = createAsyncThunk(
+  'recipes/updateRecipeIngredients',
+  async (params, { getState }) => {
+
+    const recipe = getState().recipes.recipe;
+
+    try {
+
+      const response = await AuthedAPI.patch(`/recipes/${recipe._id}/ingredients`, params);
+
+      return response.data;
+
+    } catch (error) {
+      return error?.response?.data;
+    }
+
+  }
+)
+
 export const addRecipe = createAsyncThunk(
   'recipes/addRecipe',
   async recipe => {
@@ -79,8 +98,6 @@ export const addRecipe = createAsyncThunk(
     try {
 
       const response = await AuthedAPI.post('/recipes', recipe);
-
-      alert("RES: " + JSON.stringify(response.data))
 
       return response.data;
 
@@ -202,13 +219,21 @@ export const recipeSlice = createSlice({
         }
         state.status = 'succeeded'
       })
+      .addCase(updateRecipeIngredients.fulfilled, (state, action) => {
+        if ('_id' in action.payload) {
+          state.recipe.ingredients = action.payload.ingredients;
+        }
+        state.status = 'succeeded'
+      })
       .addCase(removeRecipeImage.fulfilled, (state, action) => {
         if ('_id' in action.payload) {
           state.recipe.images = action.payload.images;
         }
       })
       .addCase(addRecipeImages.fulfilled, (state, action) => {
-        state.recipe.images = action.payload.images;
+        if ('_id' in action.payload) {
+          state.recipe.images = action.payload.images;
+        }
       })
       .addCase(likeRecipe.fulfilled, (state, action) => {
         if ('_id' in action.payload) {
