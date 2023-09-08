@@ -14,11 +14,8 @@ const Login = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
 
-    // const [username, setUsername] = useState<String>('matthewfallon@gmail.com');
-    // const [password, setPassword] = useState<String>('Matthewfallon33!');
-
-    const [username, setUsername] = useState<String>('mfal33');
-    const [password, setPassword] = useState<String>('Matthewfallon33!');
+    const [username, setUsername] = useState<String>('');
+    const [password, setPassword] = useState<String>('');
 
     const [usernameErrors, setUsernameErrors] = useState([]);
     const [passwordErrors, setPasswordErrors] = useState([]);

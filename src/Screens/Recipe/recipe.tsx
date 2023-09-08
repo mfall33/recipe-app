@@ -16,6 +16,8 @@ import { likeRecipe, updateRecipeIngredients } from '../../Redux/Store/recipeSto
 import { selectEmail } from '../../Redux/Store/userStore';
 import { addRecipeToCollection, getCollections, selectCollections } from '../../Redux/Store/collectionStore';
 
+import Categories from '../../Data/categories';
+
 const Recipe = () => {
     // can probably add a made start boolean function in here
 
@@ -389,8 +391,14 @@ const Recipe = () => {
                 </View>
 
                 <View style={styles.pad}>
+
+                    <Text>{JSON.stringify(Categories)}</Text>
+                    {/* categories must come through selector */}
+                    {/* categories */}
+                    {/* selected categories */}
+
                     <Pills
-                        containerStyle={{ marginTop: -10}}
+                        containerStyle={{ marginTop: 0}}
                         required={true}
                         onPress={(pill) => { alert(pill._id) }}
                         label="Categories"

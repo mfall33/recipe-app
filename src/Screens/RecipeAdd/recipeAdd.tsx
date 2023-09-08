@@ -81,7 +81,6 @@ const RecipeAdd = ({ route }) => {
                 clearErrors();
 
                 if (data.errors) {
-                    alert(JSON.stringify(data.errors))
                     setNameErrors(data.errors.name)
                     setDurationErrors(data.errors.duration)
                     return;

@@ -29,10 +29,21 @@ const userPersistConfig = {
   storage: AsyncStorage
 }
 
+const categoriesPersistConfig = {
+  key: 'categories',
+  version: 1,
+  storage: AsyncStorage,
+};
+
 
 const rootReducer = combineReducers({
   auth: persistReducer(authPersistConfig, authStore),
   user: persistReducer(userPersistConfig, userStore),
+  categories: persistReducer(categoriesPersistConfig, (state = [], action) => {
+    // Your categories reducer logic here
+    // You can handle any actions related to categories here if needed
+    return state;
+  }),
   recipes: recipeStore,
   collections: collectionStore
 });

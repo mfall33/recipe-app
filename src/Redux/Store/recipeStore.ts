@@ -1,10 +1,12 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { AuthedAPI } from '../../API';
+import Categories from '../../Data/categories';
 
 interface RecipeState {
   recipe: object,
   recipes: [],
   myRecipes: [],
+  categories: any[],
   status: string
 }
 
@@ -12,6 +14,7 @@ const initialState: RecipeState = {
   recipe: {},
   recipes: [],
   myRecipes: [],
+  categories: Categories,
   status: 'idle',
 }
 

@@ -36,11 +36,7 @@ export const signin = createAsyncThunk(
   async user => {
 
     try {
-      /* 
-      we don't really need the API axios instance for
-      this but the response interceptor will set the
-      access token behind the scenes
-      */
+
       const response = await UnAuthedAPI.post(`/auth/signin`, user);
 
       return response.data;

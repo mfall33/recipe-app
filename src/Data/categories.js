@@ -1,0 +1,1 @@
+export default ['Appetizers', 'Asian', 'BBQ', 'Chicken', 'Fried food', 'Healthy', 'Savoury'];
