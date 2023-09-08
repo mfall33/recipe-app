@@ -1,12 +1,12 @@
 import { ScrollView, StyleSheet, Text, View, ImageBackground, TouchableOpacity } from "react-native";
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { useCallback, useRef, useState } from "react";
+import Toast from "react-native-toast-message";
 import { useDispatch } from "react-redux";
 
 import { TextInput, Button, ParaSm } from "../../Components";
 import { BLACK_OP_HEAVY, TURQOISE, WHITE } from "../../Constants/Colors";
 import { signin } from "../../Redux/Store/authStore";
-import Toast from "react-native-toast-message";
 import { setUser } from "../../Redux/Store/userStore";
 
 const Login = () => {
